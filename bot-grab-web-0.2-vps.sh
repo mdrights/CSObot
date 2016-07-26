@@ -10,9 +10,9 @@ Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
 Chatid="64960773"
 Date="`date +%Y-%m-%d`"
 
-echo "News from NGOCN.net" > $Text
-curl http://www.ngocn.net | grep "www.ngocn.net/news/$Date" >> $Text
-
+# 1.-----------------------
+echo "Today's news from 国务院法制办：草案征集公告" > $Text
+curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a title=" >> $Text
 
 pandoc -f html -t markdown $Text -o $MDText
 
