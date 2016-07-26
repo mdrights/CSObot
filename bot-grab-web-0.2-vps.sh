@@ -16,7 +16,7 @@ curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a title=" >> $Text
 
 pandoc -f html -t markdown $Text -o $MDText
 
-curl "https://api.telegram.org/bot$Token/sendmessage?chat_id=$Chatid&text=`cat $MDText`" 1&>/dev/null
+w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$Chatid&text=`cat $MDText`" 1&>/dev/null
 
 echo "News had been sent."
 exit 0
