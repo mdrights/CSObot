@@ -1,7 +1,7 @@
 #!/bin/bash
 # Grab specific websites' contents regularly. And send them to my Bot :)
 # 2016.07.23
-# ver 0.2.1
+# ver 0.2.3
 
 
 Text="$HOME/bot-website-links.html"
@@ -14,7 +14,7 @@ Date="`date +%Y-%m-%d`"
 
 # 1.-----------------------
 echo "Today's news from 国务院法制办：草案征集公告" > $Text
-echo >> $Text
+echo "" >> $Text
 curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a title=.*$Date" >> $Text
 
 pandoc -f html -t markdown $Text -o $MDText
@@ -25,9 +25,14 @@ w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$Chatid&text=`cat $M
 
 
 # 2.----------------------
+echo "Today's news from 国务院办公厅大法好" > $Text
+echo "" >> $Text
 
+curl http://www.gov.cn/zhengce/index.htm | grep "2016-`date +%m`/`date +%e`.*国务院办公厅" >> $Text
 
+pandoc -f html -t markdown $Text -o $MDText
 
+w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$Chatid&text=`cat $MDText`" 1&>/dev/null
 
 
 
