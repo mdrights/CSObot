@@ -14,7 +14,8 @@ Date="`date +%Y-%m-%d`"
 
 # 1.-----------------------
 echo "Today's news from 国务院法制办：草案征集公告" > $Text
-curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a title=" >> $Text
+echo >> $Text
+curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a title=.*$Date" >> $Text
 
 pandoc -f html -t markdown $Text -o $MDText
 
