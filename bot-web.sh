@@ -35,6 +35,8 @@ pandoc -f html -t markdown $Text -o $MDText
 w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$Chatid&text=`cat $MDText`" 1&>/dev/null
 
 
+# 3.----------------------
+
 
 echo "News had been sent."
 exit 0
