@@ -9,11 +9,11 @@ MDText="$HOME/bot-md-links.md"
 MDText1="$HOME/bot-md-links1.md"
 
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
-Chatid="`cat $HOME/chatid`"
+Chatid="`cat $HOME/github/CSObot/id-list.txt`"
 Date="`date +%Y-%m-%d`"
 
 # 1.-----------------------
-echo "<b>Today's news from 国务院法制办：草案征集公告</b>" > $Text
+echo "<em>Today's news from 国务院法制办：草案征集公告</em>" > $Text
 echo "" >> $Text
 curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a title=.*$Date" >> $Text
 
@@ -28,7 +28,7 @@ done
 
 
 # 2.----------------------
-echo "Today's news from 国务院办公厅大法好" > $Text
+echo "<em>Today's news from 国务院办公厅大法好</em>" > $Text
 echo "" >> $Text
 
 curl http://www.gov.cn/zhengce/index.htm | grep "2016-`date +%m`/`date +%e`.*国务院办公厅" >> $Text

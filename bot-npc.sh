@@ -9,7 +9,7 @@ MDText="$HOME/npc.gov.md"
 MDText1="$HOME/npc.gov.1.md"
 
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
-Chatid="`cat $HOME/chatid`"
+Chatid="`cat $HOME/github/CSObot/id-list.txt`"
 Date="`date +%Y-%m-%d`"
 
 #----------------------------

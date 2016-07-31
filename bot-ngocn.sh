@@ -7,10 +7,10 @@
 Text="$HOME/bot-website-links.html"
 MDText="$HOME/bot-md-links.txt"
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
-Chatid="`cat $HOME/chatid`"
+Chatid="`cat $HOME/github/CSObot/id-list.txt`"
 Date="`date +%Y-%m-%d`"
 
-echo "Today's news from NGOCN.net, $Date." > $Text
+echo "<em>Today's news from NGOCN.net, $Date.</em>" > $Text
 echo >> $Text
 
 curl http://www.ngocn.net | grep "www.ngocn.net/news/$Date" | grep -v "/upload/" >> $Text
