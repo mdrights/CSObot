@@ -38,13 +38,10 @@ send_msg () {
         done
 						# Check and response to feedback (not commands). If it is, send it to me.
         if [ -z "$Cmd_rv" ]; then
-        Feedbk=`awk -F \" '$32=="text" { print $34 ; }' $NewMsg`
+        Feedbk=`grep -o "text\":\".*\"" $NewMsg`
         echo "There is a feedback: $Feedbk."
                 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$Feedbk&parse_mode=Markdown" 1&>/dev/null
 
-        else
-                                # An empty message. Ask what he/she wanna to say.
-                w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&parse_mode=Markdown&text=Sorry, what did you say?" 1&>/dev/null
         fi
 
 }
@@ -63,13 +60,13 @@ grab_msg () {
 		# Check if it's from a new chat-id?
 	for m in `cat $IdList`
 	do
-		if [ "$MsgId" -eq "$m" ]; then
+		if [ "$MsgId" == "$m" ]; then
 		echo "This is an old chat-id."; break
 		else
 		continue
 		fi 	
 	done
-	if [ "$MsgId" -eq "$m" ]; then
+	if [ "$MsgId" == "$m" ]; then
 		send_msg $MsgId            # Go to Function1 to send message back.
 	else
 		echo "This is an new id !"
