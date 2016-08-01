@@ -7,8 +7,8 @@
 Update="$HOME/updates1.json"
 Update1="$HOME/updates1.txt"
 NewMsg=$HOME/new-message.txt
-IdList="$HOME/id-list.txt"
-Cmd_Rp="$HOME/commands-reply.txt"
+IdList="$HOME/github/CSObot/id-list.txt"
+Cmd_Rp="$HOME/github/CSObot/commands-reply.txt"
 MsgIdNew=$HOME/message-id-new.txt
 MsgIdOld=$HOME/message-id-old.txt
 
