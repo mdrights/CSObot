@@ -26,18 +26,17 @@ send_msg () {
 	echo "Get: $1"
 	Cmd_list=`awk -F : '{ print $1 }' $Cmd_Rp`                    # Commands existed in the list.
 
-	for c in $Cmd_list;
+	for c in $Cmd_list;                                           # Find out the command used in the message.
 	do
  		Cmd_rv=`grep -o "$c" $NewMsg`
 		if [ -n "$Cmd_rv" ]; then
-		echo $Cmd_rv; break
+		echo $Cmd_rv 
+		Rpl="`grep "$Cmd_rv" $Cmd_Rp | awk -F : '{ print $2 ; }'`"     # Grab the correct answer.
+		proxychains4 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&text=$Rpl&parse_mode=Markdown" 1&>/dev/null
+		break
 		fi
-	done					# Find out the command used in the message.
+	done
 
-	Rpl="`grep "$Cmd_rv" $Cmd_Rp | awk -F : '// { print $2 ; }'`"     # Grab the correct answer.
-									# Send it!
-	proxychains4 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&text=$Rpl&parse_mode=Markdown" 1&>/dev/null
-	echo "$Rpl"
 }
 
 

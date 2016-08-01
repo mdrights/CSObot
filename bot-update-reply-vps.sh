@@ -6,11 +6,11 @@
 # Set file receiving original updates. 
 Update="$HOME/github/CSObot/updates1.json"
 Update1="$HOME/github/CSObot/updates1.txt"
-NewMsg=$HOME/github/CSObot/new-message.txt
+NewMsg="$HOME/github/CSObot/new-message.txt"
 IdList="$HOME/github/CSObot/id-list.txt"
 Cmd_Rp="$HOME/github/CSObot/commands-reply.txt"
-MsgIdNew=$HOME/github/CSObot/message-id-new.txt
-MsgIdOld=$HOME/github/CSObot/message-id-old.txt
+MsgIdNew="$HOME/github/CSObot/message-id-new.txt"
+MsgIdOld="$HOME/github/CSObot/message-id-old.txt"
 
 
 if [ ! -x $Idlist ];then
@@ -26,18 +26,17 @@ send_msg () {
 	echo "Get: $1"
 	Cmd_list=`awk -F : '{ print $1 }' $Cmd_Rp`                    # Commands existed in the list.
 
-	for c in $Cmd_list;
-	do
- 		Cmd_rv=`grep -o "$c" $NewMsg`
-		if [ -n "$Cmd_rv" ]; then
-		echo $Cmd_rv; break
-		fi
-	done					# Find out the command used in the message.
+        for c in $Cmd_list;                                           # Find out the command used in the message.
+        do
+                Cmd_rv=`grep -o "$c" $NewMsg`
+                if [ -n "$Cmd_rv" ]; then
+                echo $Cmd_rv 
+                Rpl="`grep "$Cmd_rv" $Cmd_Rp | awk -F : '{ print $2 ; }'`"     # Grab the correct answer.
+                w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&text=$Rpl&parse_mode=Markdown" 1&>/dev/null
+                break
+                fi
+        done
 
-	Rpl="`grep "$Cmd_rv" $Cmd_Rp | awk -F : '{ print $2 ; }'`"     # Grab the correct answer.
-									# Send it!
-	w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&text=$Rpl&parse_mode=Markdown" 1&>/dev/null
-	echo "$Rpl"
 }
 
 
