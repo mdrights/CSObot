@@ -1,1 +1,1 @@
-"message":{"message_id":208,"from":{"id":102430753,"first_name":"Am3lia"},"chat":{"id":102430753,"first_name":"Am3lia","type":"private"},"date":1470058639,"text":"\/list","entities":[{"type":"bot_command","offset":0,"length":5}]}}]}
+"message":{"message_id":67,"from":{"id":264155996,"first_name":"\u4e11\u725b","last_name":"\uff0d\u8fd9\u53ea\u662f\u6211\u5c0f\u53f7"},"chat":{"id":-1001065864871,"title":"\u6d4b\u8bd5","type":"supergroup"},"date":1470061414,"text":"\/feedback@CSObot \u6211\u7231\u4f60\u5594\uff5e","entities":[{"type":"bot_command","offset":0,"length":16}]}}]}
