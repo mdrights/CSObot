@@ -34,7 +34,7 @@ send_msg () {
 		fi
 	done					# Find out the command used in the message.
 
-	Rpl="`grep "$Cmd_rv" $Cmd_Rp | awk -F : '// { print $2 ; }'`"     # Grab the correct answer.
+	Rpl="`grep "$Cmd_rv" $Cmd_Rp | awk -F : '{ print $2 ; }'`"     # Grab the correct answer.
 									# Send it!
 	w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&text=$Rpl&parse_mode=Markdown" 1&>/dev/null
 	echo "$Rpl"
