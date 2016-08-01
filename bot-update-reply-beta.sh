@@ -36,8 +36,8 @@ send_msg () {
 		break
 		fi
 	done
-
-	if [ -n "$Cmd_rv" ]; then
+						# Check and response to feedback (not commands). If it is, send it to me.
+	if [ -z "$Cmd_rv" ]; then
 	Feedbk=`awk -F \" '$32=="text" { print $34 ; }' $NewMsg`
 	echo "There is a feedback: $Feedbk."
 		proxychains4 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$Feedbk&parse_mode=Markdown" 1&>/dev/null
