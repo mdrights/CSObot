@@ -1,7 +1,7 @@
 #!/bin/bash
 # Grab information from npc.gov.cn
-# 2016-07-29
-# 0.1.2
+# Initiated at 2016-07-29
+# 1.2.0
 
 Text="$HOME/npc.gov.html"
 Text1="$HOME/npc.gov.1.html"
@@ -26,8 +26,8 @@ sed 's/\.\.\/\.\./http:\/\/www.npc.gov.cn/g' $MDText > $MDText1
 # sed '2s/^/正在征求意见：/g
 
 for i in $Chatid;
-do
-w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+do			# For testing.
+#w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
 done
 
 
@@ -46,7 +46,10 @@ if [ -s $Text ]; then
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
 	done
 else
-	echo "No news from there."
+	a="No news from 人大常委会法律发布."
+	echo $a
+	 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
+
 fi
 
 
@@ -64,10 +67,29 @@ if [ -s $Text ]; then
         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
         done
 else
-        echo "No news from there."
+	a="No news from 人大常委会报告发布."
+        echo $a
+         w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
 fi
 
-# ------------------------------
+# 4.------------------------------
 
+# curl
+#if [ -s $Text ]; then
+#        pandoc -f html -t markdown $Text -o $MDText
+
+#        sed 's/href=\"/href=\"http:\/\/www.npc.gov.cn\/npc\/xinwen\//g' $MDText | sed '1s/^/*人大常>委会报告发布*/g' > $MDText1
+
+#        for i in $Chatid;
+#        do
+#        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+#        done
+#else
+#        a="No news from 人大常委会报告发布."
+#        echo $a
+#         w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
+#fi
+
+# ------------------------------
 echo "News had been sent."
 exit 0

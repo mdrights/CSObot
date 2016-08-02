@@ -1,7 +1,7 @@
 #!/bin/bash
 # Grab specific websites' contents regularly. And send them to my Bot :)
-# 2016.07.23
-# ver 0.2.4
+# Initiated at 2016.07.23
+# ver 1.2.0
 
 
 Text="$HOME/bot-website-links.html"
@@ -51,10 +51,10 @@ if [ -s $Text ]; then
 else
 	echo "*Today's news from 国务院办公厅大法好*  
 -还没有新出的大法呢？" >> $Text
-	for i in $Chatid;
-	do
-	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
-	done
+#	for i in $Chatid;
+#	do					Change to sending notice to myself only.
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
+#	done
 fi
 
 
@@ -73,10 +73,10 @@ if [ -s $Text ]; then
 else
         echo "*Today's news from 国务院部门规章*  
 -还没有新出的大法呢？" >> $Text
-        for i in $Chatid;
-        do
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
-        done
+        #for i in $Chatid;
+        #do
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
+        #done
 fi
 
 
@@ -94,10 +94,10 @@ if [ -s $Text ]; then
 else
         echo "*Today's news from 国务院行政法规*
 -还没有新出的大法呢？" >> $Text
-        for i in $Chatid;
-        do
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
-        done
+        #for i in $Chatid;
+        #do
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
+        #done
 fi
 
 #-------------------------

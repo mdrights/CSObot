@@ -1,7 +1,7 @@
 #!/bin/bash
 # Grab NGOCN.net's contents regularly. And send them to my Bot :)
-# 2016.07.23
-# 0.1.3
+# Initiated at 2016.07.23
+# 1.2.0
 
 
 Text="$HOME/bot-website-links.html"
@@ -22,12 +22,14 @@ if [ -s $Text ]; then
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText`&parse_mode=Markdown" 1&>/dev/null
 	done
 else
-	echo "*Today's news from NGOCN.net, $Date.*  Oops，现在还没有新的内容！" >> $Text
+	a="*Today's news from NGOCN.net, $Date.*  Oops，现在还没有新的内容！"
 	
-	for i in $Chatid;
-	do
-	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
-	done
+#	for i in $Chatid;
+#	do
+	echo $a
+         w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
+
+#	done
 fi
 
 echo "News had been sent."
