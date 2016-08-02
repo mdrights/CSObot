@@ -22,7 +22,7 @@ if [ -s $Text ]; then
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText`&parse_mode=Markdown" 1&>/dev/null
 	done
 else
-	echo "*Today's news from NGOCN.net, $Date.* \nOops，现在还没有新的内容！" >> $Text
+	echo "*Today's news from NGOCN.net, $Date.*  Oops，现在还没有新的内容！" >> $Text
 	
 	for i in $Chatid;
 	do
