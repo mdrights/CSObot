@@ -27,7 +27,8 @@ if [ -s $Text ]; then
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
 	done
 else
-	echo "*Today's news from 国务院法制办：草案征集公告*  -还没有新出的草案，休息一下吧～" >> $Text
+	echo "*Today's news from 国务院法制办：草案征集公告*  
+-还没有新出的草案，休息一下吧～" >> $Text
 	for i in $Chatid;
 	do
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
@@ -36,8 +37,6 @@ fi
 
 
 # 2.----------------------
-echo "<em>Today's news from 国务院办公厅大法好</em>" > $Text
-echo "" >> $Text
 
 curl http://www.gov.cn/zhengce/index.htm | grep "2016-`date +%m`/`date +%e`.*国务院办公厅" > $Text
 
@@ -50,12 +49,12 @@ if [ -s $Text ]; then
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText`&parse_mode=Markdown" 1&>/dev/null
 	done
 else
-	echo "*Today's news from 国务院办公厅大法好*  -还没有新出的大法呢？" >> $Text
+	echo "*Today's news from 国务院办公厅大法好*  
+-还没有新出的大法呢？" >> $Text
 	for i in $Chatid;
 	do
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
 	done
-else
 fi
 
 
