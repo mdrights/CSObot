@@ -25,9 +25,9 @@ sed 's/\.\.\/\.\./http:\/\/www.npc.gov.cn/g' $MDText > $MDText1
 
 # sed '2s/^/正在征求意见：/g
 
-for i in $Chatid;
-do			# For testing.
-#w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+for i in $Chatid;		# For testing.
+do
+w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
 done
 
 
