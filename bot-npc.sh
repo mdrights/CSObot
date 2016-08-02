@@ -33,38 +33,39 @@ done
 
 # 2.----------------------------
 
-echo "<em>人大常委会法律发布</em>" > $Text
-echo "" >> $Text
 
-curl http://www.npc.gov.cn/npc/xinwen/node_12488.htm | grep "<a href=.*$Date" >> $Text
+curl http://www.npc.gov.cn/npc/xinwen/node_12488.htm | grep "<a href=.*$Date" > $Text
 
-pandoc -f html -t markdown $Text -o $MDText
+if [ -s $Text ]; then
+	pandoc -f html -t markdown $Text -o $MDText
 
-sed 's/(href=\")/\1http:\/\/www.npc.gov.cn\/npc\/xinwen\//g' $MDText > $MDText1
+	sed 's/href=\"/href=\"http:\/\/www.npc.gov.cn\/npc\/xinwen\//g' $MDText | sed '1s/^/*人大常委会法律发布*/g' > $MDText1
 
-
-for i in $Chatid;
-do
-w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
-done
+	for i in $Chatid;
+	do
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+	done
+else
+	echo "No news from there."
+fi
 
 
 # 3.----------------------------
 
-echo "<em>人大常委会报告发布</em>" > $Text
-echo "" >> $Text
+curl http://www.npc.gov.cn/npc/xinwen/node_12491.htm | grep "<a href=.*$Date" > $Text
 
-curl http://www.npc.gov.cn/npc/xinwen/node_12491.htm | grep "<a href=.*$Date" >> $Text
+if [ -s $Text ]; then
+        pandoc -f html -t markdown $Text -o $MDText
 
-pandoc -f html -t markdown $Text -o $MDText
+        sed 's/href=\"/href=\"http:\/\/www.npc.gov.cn\/npc\/xinwen\//g' $MDText | sed '1s/^/*人大常委会报告发布*/g' > $MDText1
 
-sed 's/(href=\")/\1http:\/\/www.npc.gov.cn\/npc\/xinwen\//g' $MDText > $MDText1
-
-
-for i in $Chatid;
-do
-w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
-done
+        for i in $Chatid;
+        do
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+        done
+else
+        echo "No news from there."
+fi
 
 # ------------------------------
 
