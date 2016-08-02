@@ -12,7 +12,7 @@ Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
 Chatid="`cat $HOME/github/CSObot/id-list.txt`"
 Date="`date +%Y-%m-%d`"
 
-#----------------------------
+# 1.----------------------------
 
 echo "<em>人大常委会法律草案征求意见</em>" > $Text
 echo "" >> $Text
@@ -29,6 +29,44 @@ for i in $Chatid;
 do
 w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
 done
+
+
+# 2.----------------------------
+
+echo "<em>人大常委会法律发布</em>" > $Text
+echo "" >> $Text
+
+curl http://www.npc.gov.cn/npc/xinwen/node_12488.htm | grep "<a href=.*$Date" >> $Text
+
+pandoc -f html -t markdown $Text -o $MDText
+
+sed 's/(href=\")/\1http:\/\/www.npc.gov.cn\/npc\/xinwen\//g' $MDText > $MDText1
+
+
+for i in $Chatid;
+do
+w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+done
+
+
+# 3.----------------------------
+
+echo "<em>人大常委会报告发布</em>" > $Text
+echo "" >> $Text
+
+curl http://www.npc.gov.cn/npc/xinwen/node_12491.htm | grep "<a href=.*$Date" >> $Text
+
+pandoc -f html -t markdown $Text -o $MDText
+
+sed 's/(href=\")/\1http:\/\/www.npc.gov.cn\/npc\/xinwen\//g' $MDText > $MDText1
+
+
+for i in $Chatid;
+do
+w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+done
+
+# ------------------------------
 
 echo "News had been sent."
 exit 0

@@ -61,6 +61,45 @@ fi
 
 # 3.----------------------
 
+curl http://www.chinalaw.gov.cn/article/fgkd/xfg/gwybmgz/ | grep "<a title=.*$Date" > $Text
+if [ -s $Text ]; then
+        echo "<em>Today's news from 国务院部门规章</em>" >> $Text
+        pandoc -f html -t markdown $Text -o $MDText
 
+        for i in $Chatid;
+        do
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText`&parse_mode=Markdown" 1&>/dev/null
+        done
+else
+        echo "*Today's news from 国务院部门规章*  
+-还没有新出的大法呢？" >> $Text
+        for i in $Chatid;
+        do
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
+        done
+fi
+
+
+# 4.----------------------
+
+curl http://www.chinalaw.gov.cn/article/fgkd/xfg/xzfg/ | grep "<a title=.*$Date" > $Text
+if [ -s $Text ]; then
+        echo "<em>Today's news from 国务院行政法规</em>" >> $Text
+        pandoc -f html -t markdown $Text -o $MDText
+
+        for i in $Chatid;
+        do
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText`&parse_mode=Markdown" 1&>/dev/null
+        done
+else
+        echo "*Today's news from 国务院行政法规*
+-还没有新出的大法呢？" >> $Text
+        for i in $Chatid;
+        do
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
+        done
+fi
+
+#-------------------------
 echo "News had been sent."
 exit 0
