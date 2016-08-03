@@ -4,8 +4,8 @@
 # 1.2.0
 
 
-Text="$HOME/bot-website-links.html"
-MDText="$HOME/bot-md-links.txt"
+Text="$HOME/bot-ngocn.html"
+MDText="$HOME/bot-ngocn.md"
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
 Chatid="`cat $HOME/github/CSObot/id-list.txt`"
 Date="`date +%Y-%m-%d`"

@@ -4,9 +4,9 @@
 # ver 1.2.0
 
 
-Text="$HOME/bot-website-links.html"
-MDText="$HOME/bot-md-links.md"
-MDText1="$HOME/bot-md-links1.md"
+Text="$HOME/bot-web.html"
+MDText="$HOME/bot-web.md"
+MDText1="$HOME/bot-web.1.md"
 
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
 Chatid="`cat $HOME/github/CSObot/id-list.txt`"
