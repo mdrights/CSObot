@@ -38,7 +38,7 @@ fi
 
 # 2.----------------------
 
-curl http://www.gov.cn/zhengce/index.htm | grep "2016-`date +%m`/`date +%e`.*国务院办公厅" > $Text
+curl http://www.gov.cn/zhengce/index.htm | grep "2016-`date +%m`/`date +%d`.*国务院办公厅" > $Text
 
 if [ -s $Text ]; then
 	echo "<em>Today's news from 国务院办公厅大法好</em>" >> $Text
