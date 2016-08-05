@@ -4,6 +4,7 @@
 
 
 Text="$HOME/bot-sz.html"
+Text1="$HOME/bot-sz.1.html"
 MDText="$HOME/bot-sz.md"
 MDText1="$HOME/bot-sz.1.md"
 
@@ -16,8 +17,9 @@ Date="`date +%Y%m%d`"
 curl http://www.sz.gov.cn/cn/xxgk/szgg/tzgg/ | grep "$Date" > $Text
 
 if [ -s "$Text" ]; then
-	pandoc -f html -t markdown $Text -o $MDText	
-	sed '1s/^/*深圳政府官网通知/g' $MDText > $MDText1
+	iconv -f GB2312 -t UTF-8 $Text > $Text1
+	pandoc -f html -t markdown $Text1 -o $MDText	
+	sed '1s/^/*News from SZ Gov website* <br>/g' $MDText | sed 's/\.\//http:\/\/www.sz.gov.cn\/cn\/xxgk\/szgg\/tzgg\//g' | sed 's/ \".*\"//g' > $MDText1
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
 else
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no news today." 1&>/dev/null
