@@ -5,6 +5,7 @@
 
 Text="$HOME/bot-sz.html"
 Text1="$HOME/bot-sz.1.html"
+Text2="$HOME/bot-sz.2.html"
 MDText="$HOME/bot-sz.md"
 MDText1="$HOME/bot-sz.1.md"
 
@@ -25,5 +26,22 @@ else
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no news today." 1&>/dev/null
 fi
 	
+
+# 2.-----------------------
+
+curl http://www.sz.gov.cn/xxgk/zcfg/ | sed '/title/d' > $Text
+
+iconv -f GB2312 -t UTF-8 $Text > $Text1
+
+sed -n -e '/.*深圳市法规及规章.*/,/.*rightAreaEnd.*/ { p }' $Text1 > $Text2
+
+# if [ -s "$Text" ]; then
+        pandoc -f html -t markdown $Text2 -o $MDText
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText`&parse_mode=Markdown" 1&>/dev/null
+#else
+       # w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no news today." 1&>/dev/null
+#fi
+
+
 echo
 exit 0
