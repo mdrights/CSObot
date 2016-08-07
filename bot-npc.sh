@@ -14,21 +14,22 @@ Date="`date +%Y-%m-%d`"
 
 # 1.----------------------------
 
-echo "<em>人大常委会法律草案征求意见</em>" > $Text
-echo "" >> $Text
 
-curl http://www.npc.gov.cn/npc/flcazqyj/node_8176.htm | grep "<a href=\"\.\.\/\.\.\/COB" >> $Text
+	curl http://www.npc.gov.cn/npc/flcazqyj/node_8176.htm | grep "<a href=\"\.\.\/\.\.\/COB" > $Text
+if [ -s $Text ]; then
+	pandoc -f html -t markdown $Text -o $MDText
+	sed 's/\.\.\/\.\./http:\/\/www.npc.gov.cn/g' $MDText | sed '1s/^/人大常委会法律草案征求意见/g' > $MDText1
 
-pandoc -f html -t markdown $Text -o $MDText
+			# sed '2s/^/正在征求意见：/g
 
-sed 's/\.\.\/\.\./http:\/\/www.npc.gov.cn/g' $MDText > $MDText1
-
-# sed '2s/^/正在征求意见：/g
-
-for i in $Chatid;		# For testing.
-do
-w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
-done
+	for i in $Chatid;
+	do
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+	done
+else
+	a="No draft law is under consultation yet."
+	 w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
+fi
 
 
 # 2.----------------------------
@@ -47,8 +48,7 @@ if [ -s $Text ]; then
 	done
 else
 	a="No news from 人大常委会法律发布."
-	echo $a
-	 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
+	 w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
 
 fi
 
@@ -68,8 +68,7 @@ if [ -s $Text ]; then
         done
 else
 	a="No news from 人大常委会报告发布."
-        echo $a
-         w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
+         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
 fi
 
 # 4.------------------------------
