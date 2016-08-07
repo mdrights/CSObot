@@ -36,8 +36,9 @@ iconv -f GB2312 -t UTF-8 $Text > $Text1						# Convert codes to UTF otherwise fa
 sed -n -e '/.*深圳市法规及规章.*/,/.*rightAreaEnd.*/ { p }' $Text1 > $Text2	# Grab the content I want.
 
 # if [ -s "$Text" ]; then
-        # pandoc -f html -t markdown $Text2 -o $MDText				# TG fails to convert markdown if there's any "_" in links.
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $Text2`&parse_mode=HTML" 1&>/dev/null
+        pandoc -f html -t markdown $Text2 -o $MDText				# TG fails to render markdown if there's any "_" in links.
+	sed 's/\.\.\/\.\./http:\/\/www.sz.gov.cn/g' $MDText > $MDText1
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`" 1&>/dev/null
 #else
        # w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no news today." 1&>/dev/null
 #fi
