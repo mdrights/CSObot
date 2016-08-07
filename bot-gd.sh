@@ -13,7 +13,7 @@ Date="`date +%Y%m`"
 
 # 1.-----------------------
 
-curl http://www.gd.gov.cn/govpub/flfg/ | grep "www\.fzb\.gd\.gov\.cn.*201607" > $Text
+curl http://www.gd.gov.cn/govpub/flfg/ | grep "www\.fzb\.gd\.gov\.cn.*$Date" > $Text
 
 if [ -s "$Text" ]; then
         pandoc -f html -t markdown $Text -o $MDText
