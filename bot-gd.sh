@@ -43,7 +43,7 @@ fi
 
 # 3.-----------------------
 
-curl http://www.gd.gov.cn/govpub/bmguifan/ | grep "$Date" | sed 's/\"\./\"http:\/\/www.gd.gov.cn/govpub/bmguifan/g' > $Text
+curl http://www.gd.gov.cn/govpub/bmguifan/ | grep "$Date" | sed 's/\"\./\"http:\/\/www.gd.gov.cn\/govpub\/bmguifan/g' > $Text
 
 if [ -s "$Text" ]; then
         pandoc -f html -t markdown $Text -o $MDText
