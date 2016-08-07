@@ -28,13 +28,13 @@ fi
 
 # 2.-----------------------
 
-curl http://zwgk.gd.gov.cn/szfl.htm | grep "$Date1" | sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn\/szfl.htm' > $Text
+curl http://zwgk.gd.gov.cn/szfl.htm | grep "$Date1" | sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn/g' > $Text
 	#sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn\/szfl.htm'
-curl http://zwgk.gd.gov.cn/szfwj.htm | grep "$Date" | sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn\/szfwj.htm' >> $Text
+curl http://zwgk.gd.gov.cn/szfwj.htm | grep "$Date" | sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn/g' >> $Text
 
 if [ -s "$Text" ]; then
         pandoc -f html -t markdown $Text -o $MDText
-        sed '1s/^/*广东省政府大法和本月规范性文件发布*/g' $MDText > $MDText1
+        sed '1s/^/*广东省政府大法和本月规范性文件发布*    /g' $MDText | sed 's/ \".*\"//g' > $MDText1
         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
 else
         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no new release till now." 1&>/dev/null
