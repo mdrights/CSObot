@@ -5,12 +5,14 @@
 
 
 Text="$HOME/bot-web.html"
+Text="$HOME/bot-web.1.html"
 MDText="$HOME/bot-web.md"
 MDText1="$HOME/bot-web.1.md"
 
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
 Chatid="`cat $HOME/github/CSObot/id-list.txt`"
 Date="`date +%Y-%m-%d`"
+Date1="`date +%m-%d`"
 
 # 1.-----------------------
 
@@ -29,10 +31,10 @@ if [ -s $Text ]; then
 else
 	echo "*Today's news from 国务院法制办：草案征集公告*  
 -还没有新出的草案，休息一下吧～" >> $Text
-	for i in $Chatid;
-	do
-	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
-	done
+#	for i in $Chatid;
+#	do
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
+#	done
 fi
 
 
@@ -99,6 +101,26 @@ else
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
         #done
 fi
+
+
+# 5.----------------------
+
+curl http://www.chinalaw.gov.cn/ | grep "fzxw.*$Date1" > $Text
+
+if [ -s $Text ]; then
+        pandoc -f html -t markdown $Text -o $MDText
+	sed '1s/^/*国务院法制办新闻*/g' $MDText > $MDText1
+
+	for i in $Chatid;
+        do
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
+        done
+else
+	echo "今天国务院法制办歇菜了？" >> $Text
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $Text`&parse_mode=Markdown" 1&>/dev/null
+fi
+
+
 
 #-------------------------
 echo "News had been sent."
