@@ -27,7 +27,7 @@ else
 #	for i in $Chatid;
 #	do
 	echo $a
-         w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
+         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
 
 #	done
 fi

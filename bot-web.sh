@@ -105,11 +105,11 @@ fi
 
 # 5.----------------------
 
-curl http://www.chinalaw.gov.cn/ | grep "fzxw.*$Date1" > $Text
+curl http://www.chinalaw.gov.cn/ | grep "fzxw.*$Date1" | sed 's/href=\"/href=\"http:\/\/www.chinalaw.gov.cn/g' > $Text
 
 if [ -s $Text ]; then
         pandoc -f html -t markdown $Text -o $MDText
-	sed '1s/^/*国务院法制办新闻*     /g' $MDText | sed 's/\(\//\(http:\/\/www.chinalaw.gov.cn\//g' > $MDText1
+	sed '1s/^/*国务院法制办新闻*     /g' $MDText > $MDText1
 
 	for i in $Chatid;
         do
