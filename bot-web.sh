@@ -13,10 +13,11 @@ Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
 Chatid="`cat $HOME/github/CSObot/id-list.txt`"
 Date="`date +%Y-%m-%d`"
 Date1="`date +%m-%d`"
+Date2="`date +%Y%m`"
 
 # 1.-----------------------
 
-	curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a title=.*$Date" > $Text
+	curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a.*href=.*$Date2.*" > $Text
 
 if [ -s $Text ]; then
 	echo "<em>Today's news from 国务院法制办：草案征集公告</em>" >> $Text

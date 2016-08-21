@@ -21,7 +21,7 @@ curl http://www.sz.gov.cn/cn/xxgk/szgg/tzgg/ | grep "$Date" > $Text
 if [ -s "$Text" ]; then
 	iconv -f GB2312 -t UTF-8 $Text > $Text1
 	pandoc -f html -t markdown $Text1 -o $MDText	
-	sed '1s/^/*深圳政府官网通知*    /g' $MDText | sed 's/\.\//http:\/\/www.sz.gov.cn\/cn\/xxgk\/szgg\/tzgg\//g' | sed 's/ \".*\"//g' > $MDText1
+	sed '1s/^/深圳政府官网通知    /g' $MDText | sed 's/\.\//http:\/\/www.sz.gov.cn\/cn\/xxgk\/szgg\/tzgg\//g' | sed 's/ \".*\"//g' > $MDText1
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`" 1&>/dev/null 							# TG fails to render markdown if there's any "_" in links.
 else
 	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no news today." 1&>/dev/null
@@ -30,16 +30,16 @@ fi
 
 # 2.-----------------------
 
-curl http://www.sz.gov.cn/xxgk/zcfg/ | sed '/title/d' > $Text                   # Failed to convert codes if this line exists.
+#curl http://www.sz.gov.cn/xxgk/zcfg/ | sed '/title/d' > $Text                   # Failed to convert codes if this line exists.
 
-iconv -f GB2312 -t UTF-8 $Text > $Text1						# Convert codes to UTF otherwise failing to grab content.
+#iconv -f GB2312 -t UTF-8 $Text > $Text1						# Convert codes to UTF otherwise failing to grab content.
 
-sed -n -e '/.*深圳市法规及规章.*/,/.*rightAreaEnd.*/ { p }' $Text1 > $Text2	# Grab the content I want.
+#sed -n -e '/.*深圳市法规及规章.*/,/.*rightAreaEnd.*/ { p }' $Text1 > $Text2	# Grab the content I want.
 
 # if [ -s "$Text" ]; then
-        pandoc -f html -t markdown $Text2 -o $MDText				# TG fails to render markdown if there's any "_" in links.
-	sed 's/\.\.\/\.\./http:\/\/www.sz.gov.cn/g' $MDText > $MDText1
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`" 1&>/dev/null
+#        pandoc -f html -t markdown $Text2 -o $MDText				# TG fails to render markdown if there's any "_" in links.
+#	sed 's/\.\.\/\.\./http:\/\/www.sz.gov.cn/g' $MDText > $MDText1
+#        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`" 1&>/dev/null
 #else
        # w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no news today." 1&>/dev/null
 #fi
@@ -47,7 +47,7 @@ sed -n -e '/.*深圳市法规及规章.*/,/.*rightAreaEnd.*/ { p }' $Text1 > $Te
 
 # 3.-----------------------
 
-curl http://www.gzlo.gov.cn/sofpro/bmyyqt/gzsfzb/lfzqyj/opinion.jsp | sed -n -e 'add.jsp/,/征集中/ { p; }' > $Text
+curl http://www.gzlo.gov.cn/sofpro/bmyyqt/gzsfzb/lfzqyj/opinion.jsp | sed -n -e '/add.jsp/,/征集中/ { p; }' > $Text
 
 if [ -s "$Text" ]; then
 	sed 's/href=/href=http:\/\/www.gzlo.gov.cn/g' $Text > $Text1

@@ -19,7 +19,7 @@ curl http://www.gd.gov.cn/govpub/flfg/ | grep "www\.fzb\.gd\.gov\.cn.*$Date" > $
 
 if [ -s "$Text" ]; then
         pandoc -f html -t markdown $Text -o $MDText
-        sed '1s/^/*广东省征求意见草案*/g' $MDText > $MDText1
+        sed '1s/^/*广东省征求意见草案*    /g' $MDText > $MDText1
         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
 else
         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no news today." 1&>/dev/null
