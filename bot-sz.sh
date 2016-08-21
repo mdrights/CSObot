@@ -13,6 +13,7 @@ MDText1="$HOME/bot-sz.1.md"
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
 Chatid="`cat $HOME/github/CSObot/id-list.txt`"
 Date="`date +%Y%m%d`"
+Month="`date +%Y%m`"
 
 # 1.-----------------------
 
@@ -47,6 +48,21 @@ fi
 
 # 3.-----------------------
 
+curl http://fzb.sz.gov.cn/xxgk/qt/tzgg/ | grep -a "href=.*$Month" | sed 's/href=\"\./href=\"http:\/\/fzb.sz.gov.cn\/xxgk\/qt\/tzgg/g' > $Text
+
+iconv -f GB2312 -t UTF-8 $Text > $Text1						# Convert codes to UTF otherwise failing to grab content.
+
+if [ -s "$Text" ]; then
+        pandoc -f html -t markdown $Text1 -o $MDText		
+	sed '1s/^/*深圳市府法制办通知公告*    /g' $MDText > $MDText1
+        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`" 1&>/dev/null
+else
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no new release from 深圳法制办." 1&>/dev/null
+fi
+
+
+# 4.-----------------------
+
 curl http://www.gzlo.gov.cn/sofpro/bmyyqt/gzsfzb/lfzqyj/opinion.jsp | sed -n -e '/add.jsp/,/征集中/ { p; }' > $Text
 
 if [ -s "$Text" ]; then
@@ -55,7 +71,7 @@ if [ -s "$Text" ]; then
 	sed '1s/^/*广州市府法制办征求意见*    /g' $MDText > $MDText1
         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`" 1&>/dev/null
 else
-	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no new release from GZ gov." 1&>/dev/null
+	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no new release from 广州法制办." 1&>/dev/null
 fi
 
 echo
