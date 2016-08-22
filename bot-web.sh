@@ -20,10 +20,10 @@ Date2="`date +%Y%m`"
 	curl http://www.chinalaw.gov.cn/article/cazjgg/ | grep "<a.*href=.*$Date2.*" > $Text
 
 if [ -s $Text ]; then
-	echo "<em>Today's news from 国务院法制办：草案征集公告</em>" >> $Text
+	sed '1s/^/国务院法制办：草案征集公告*    /g' >> $Text
 	pandoc -f html -t markdown $Text -o $MDText
 
-	sed 's/\".*\"//g' $MDText | sed 's/(\(.*)\)/\(http:\/\/www.chinalaw.gov.cn\1/g' > $MDText1
+	sed 's/ \".*\"//g' $MDText | sed 's/(\(.*)\)/\(http:\/\/www.chinalaw.gov.cn\1/g' | sed '1s/^/*国务院法制办：草案征集公告*    /g' > $MDText1
 
 	for i in $Chatid;
 	do
