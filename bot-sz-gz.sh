@@ -48,7 +48,7 @@ fi
 
 # 3.-----------------------
 
-curl http://fzb.sz.gov.cn/xxgk/qt/tzgg/ | grep -a "href=.*$Month" | sed 's/href=\"\./href=\"http:\/\/fzb.sz.gov.cn\/xxgk\/qt\/tzgg/g' > $Text
+curl http://fzb.sz.gov.cn/xxgk/qt/tzgg/ | grep "href=.*$Month" | sed 's/href=\"\./href=\"http:\/\/fzb.sz.gov.cn\/xxgk\/qt\/tzgg/g' > $Text
 
 iconv -f GB2312 -t UTF-8 $Text > $Text1						# Convert codes to UTF otherwise failing to grab content.
 
