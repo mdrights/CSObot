@@ -14,4 +14,5 @@ A Telegram bot serving the civil society in China.
 
 Hope the bot would help to monitoring the Govs in China !
 
+——有兴趣可联系：MDrights@Telegram
 Sep. 20 2016
