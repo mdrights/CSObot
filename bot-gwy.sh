@@ -1,13 +1,14 @@
 #!/bin/bash
 # Grab specific websites' contents regularly. And send them to my Bot :)
 # Initiated at 2016.07.23
+# Renamed from bot-web.sh.
 # ver 1.2.0
 
 
-Text="$HOME/bot-web.html"
-Text="$HOME/bot-web.1.html"
-MDText="$HOME/bot-web.md"
-MDText1="$HOME/bot-web.1.md"
+Text="$HOME/bot-gwy.html"
+Text="$HOME/bot-gwy.1.html"
+MDText="$HOME/bot-gwy.md"
+MDText1="$HOME/bot-gwy.1.md"
 
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
 Chatid="`cat $HOME/github/CSObot/id-list.txt`"
