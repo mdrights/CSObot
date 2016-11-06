@@ -8,8 +8,9 @@ Text1="$HOME/bot-gd.1.html"
 MDText="$HOME/bot-gd.md"
 MDText1="$HOME/bot-gd.1.md"
 
+BotDir="$HOME/CSObot/"
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
-Chatid="`cat $HOME/github/CSObot/id-list.txt`"
+Chatid="`cat $BotDir/id-list.txt`"
 Date="`date +%Y%m`"
 Date1="`date +%Y`"
 

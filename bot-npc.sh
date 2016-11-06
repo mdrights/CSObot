@@ -8,8 +8,9 @@ Text1="$HOME/npc.gov.1.html"
 MDText="$HOME/npc.gov.md"
 MDText1="$HOME/npc.gov.1.md"
 
+BotDir="$HOME/CSObot/"
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
-Chatid="`cat $HOME/github/CSObot/id-list.txt`"
+Chatid="`cat $BotDir/id-list.txt`"
 Date="`date +%Y-%m-%d`"
 
 # 1.----------------------------

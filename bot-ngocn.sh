@@ -6,8 +6,10 @@
 
 Text="$HOME/bot-ngocn.html"
 MDText="$HOME/bot-ngocn.md"
+
+BotDir="$HOME/CSObot/"
 Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
-Chatid="`cat $HOME/github/CSObot/id-list.txt`"
+Chatid="`cat $BotDir/id-list.txt`"
 Date="`date +%Y-%m-%d`"
 
 
