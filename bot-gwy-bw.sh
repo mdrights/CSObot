@@ -6,13 +6,13 @@
 
 . $HOME/CSObot/variables.sh "gwy-bw"
 
-# 1.-----------------------
+# 1.-----------------------(Can't grep the URL on Arch? while okay on Debian-local.)
 
-curl www.sda.gov.cn/WS01/CL0014/ | grep -2 "$Month1" | iconv -f GB2312 -t UTF-8 | sed 's/\.\./http:\/\/www.sda.gov.cn\/WS01/g' > $Text
+# wget -O - www.sda.gov.cn/WS01/CL0014/ | grep -2 "$Month1" | sed 's/\.\./http:\/\/www.sda.gov.cn\/WS01/g' > $Text
 
-pandoc -f html -t markdown $Text | sed '1s/^/*国家食品药品监督总局征集意见----*     /g' > $MDText
+#iconv -f GB2312 -t UTF-8 $Text | pandoc -f html -t markdown | sed '1s/^/*国家食品药品监督总局征集意见----*     /g' > $MDText
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "国家食品药品监督总局"
+#. $HOME/CSObot/toMe.sh "$Text" "$MDText" "国家食品药品监督总局"
 
 # 2.------------------------
 
@@ -31,7 +31,7 @@ curl http://www.moe.gov.cn/jyb_xwfb/s248/ | grep "href=.*$Month" | sed 's/=\"\./
 
 curl http://www.nhfpc.gov.cn/zhuzhan/gongw/lists.shtml | grep "href=.*$Month" | sed 's/\.\.\/\.\./http:\/\/www.nhfpc.gov.cn/g' > $Text
 
-        pandoc -f html -t markdown $Text | sed '1s/^/**衛生計生委文件發佈**     /g' | sed 's/ \".*\"//g' > $MDText
+pandoc -f html -t markdown_github $Text | sed -e '1s/^/**衛生計生委文件發佈**     /g' -e 's/ \".*\"//g' -e 's/&gt//g'  > $MDText
 
 . $HOME/CSObot/toMe.sh "$Text" "$MDText" "卫生计生委"
 
@@ -43,7 +43,7 @@ curl http://www.mohrss.gov.cn/SYrlzyhshbzb/zcfg/ | grep "href=.*$Month" | sed 's
 
 . $HOME/CSObot/toMe.sh "$Text" "$MDText" "人社部"
 
-# 5.------------------------
+# 5.------------------------(Get 400 bad request when wgeting telegram.org)
 curl http://www.mohurd.gov.cn/wjfb/index.html | grep "href=.*$Month" > $Text
 
         pandoc -f html -t markdown $Text | sed '1s/^/**住建部文件發佈**     /g' > $MDText
