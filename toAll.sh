@@ -6,11 +6,11 @@ Chatid="`cat $BotDir/id-list.txt`"
 if [ -s "$1" ]; then
 	for i in $Chatid
 	do
-	wget "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=$(cat $2)&parse_mode=Markdown" 1>&/dev/null
+	wget -O - "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=$(cat $2)&parse_mode=Markdown" > /dev/null
 	done
 
 else
 	a="Oops, No news from $3."
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1>&/dev/null
+        w3m -O - "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" > /dev/null
 fi
 
