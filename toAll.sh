@@ -11,6 +11,6 @@ if [ -s "$1" ]; then
 
 else
 	a="Oops, No news from $3."
-        w3m -O - "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" > /dev/null
+        wget -O - "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" > /dev/null
 fi
 
