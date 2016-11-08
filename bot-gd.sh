@@ -3,56 +3,35 @@
 ## Inititated at 2016.08.06
 ## It only sends to me.
 
-Text="$HOME/bot-gd.html"
-Text1="$HOME/bot-gd.1.html"
-MDText="$HOME/bot-gd.md"
-MDText1="$HOME/bot-gd.1.md"
-
-BotDir="$HOME/CSObot/"
-Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
-Chatid="`cat $BotDir/id-list.txt`"
-Date="`date +%Y%m`"
-Date1="`date +%Y`"
+. $HOME/CSObot/variables.sh "gd"
 
 # 1.-----------------------
 
-curl http://www.gd.gov.cn/govpub/flfg/ | grep "www\.fzb\.gd\.gov\.cn.*$Date" > $Text
-
-if [ -s "$Text" ]; then
+curl http://www.gd.gov.cn/govpub/flfg/ | grep "www\.fzb\.gd\.gov\.cn.*$Month" > $Text
         pandoc -f html -t markdown $Text -o $MDText
         sed '1s/^/*广东省征求意见草案*    /g' $MDText > $MDText1
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
-else
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no news today." 1&>/dev/null
-fi
 
+. $HOME/CSObot/toMe.sh "$Text" "$MDText1" "广东省政府（征求意见）"
 
 # 2.-----------------------
 
-curl http://zwgk.gd.gov.cn/szfl.htm | grep "$Date1" | sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn/g' > $Text
+curl http://zwgk.gd.gov.cn/szfl.htm | grep "$Month" | sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn/g' > $Text
 	#sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn\/szfl.htm'
-curl http://zwgk.gd.gov.cn/szfwj.htm | grep "$Date" | sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn/g' >> $Text
+curl http://zwgk.gd.gov.cn/szfwj.htm | grep "$Month" | sed 's/\"\./\"http:\/\/zwgk.gd.gov.cn/g' >> $Text
 
-if [ -s "$Text" ]; then
         pandoc -f html -t markdown $Text -o $MDText
         sed '1s/^/*广东省政府大法和本月规范性文件发布*    /g' $MDText | sed 's/ \".*\"//g' > $MDText1
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
-else
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Oops, no new release till now." 1&>/dev/null
-fi
 
+. $HOME/CSObot/toMe.sh "$Text" "$MDText1" "广东省政府（法规和文件发布）"
 
 # 3.-----------------------
 
-curl http://www.gd.gov.cn/govpub/bmguifan/ | grep "$Date" | sed 's/\"\./\"http:\/\/www.gd.gov.cn\/govpub\/bmguifan/g' > $Text
+curl http://www.gd.gov.cn/govpub/bmguifan/ | grep "$Month" | sed 's/\"\./\"http:\/\/www.gd.gov.cn\/govpub\/bmguifan/g' > $Text
 
-if [ -s "$Text" ]; then
         pandoc -f html -t markdown $Text -o $MDText
         sed '1s/^/*广东省政府部门规范性文件发布*      /g' $MDText | sed 's/ \".*\"//g' > $MDText1
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=`cat $MDText1`&parse_mode=Markdown" 1&>/dev/null
-else
-        w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&parse_mode=Markdown&text=Omg, no news today." 1&>/dev/null
-fi
+
+. $HOME/CSObot/toMe.sh "$Text" "$MDText1" "广东省政府部门文件发布"
 
 echo "Done."
 echo

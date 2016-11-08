@@ -4,35 +4,14 @@
 # 1.2.0
 
 
-Text="$HOME/bot-ngocn.html"
-MDText="$HOME/bot-ngocn.md"
+. $HOME/CSObot/variables.sh "ngo-cn"
 
-BotDir="$HOME/CSObot/"
-Token="260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o"
-Chatid="`cat $BotDir/id-list.txt`"
-Date="`date +%Y-%m-%d`"
+curl http://www.ngocn.net | grep "www.ngocn.net/news/$Date1" | grep -v "/upload/" > $Text
 
-
-curl http://www.ngocn.net | grep "www.ngocn.net/news/$Date" | grep -v "/upload/" > $Text
-
-if [ -s $Text ]; then
-	echo "<em>Today's news from NGOCN.net, $Date.</em>" >> $Text
+	echo "<em>Today's news from NGOCN.net, $Date1.</em>" >> $Text
 	pandoc -f html -t markdown $Text -o $MDText
 
-	for i in $Chatid;
-	do
-	w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=$i&text=`cat $MDText`&parse_mode=Markdown" 1&>/dev/null
-	done
-else
-	a="*Today's news from NGOCN.net, $Date.*  Oops，现在还没有新的内容！"
-	
-#	for i in $Chatid;
-#	do
-	echo $a
-         w3m "https://api.telegram.org/bot$Token/sendmessage?chat_id=64960773&text=$a&parse_mode=Markdown" 1&>/dev/null
-
-#	done
-fi
+. $HOME/CSObot/toMe.sh "$Text" "$MDText" "NGOCN.net"
 
 echo "News had been sent."
 exit 0
