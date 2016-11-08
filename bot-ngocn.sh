@@ -11,7 +11,7 @@ curl http://www.ngocn.net | grep "www.ngocn.net/news/$Date1" | grep -v "/upload/
 	echo "<em>Today's news from NGOCN.net, $Date1.</em>" >> $Text
 	pandoc -f html -t markdown $Text -o $MDText
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "NGOCN.net"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText" "NGOCN.net"
 
 echo "News had been sent."
 exit 0

@@ -14,7 +14,7 @@ curl http://www.sz.gov.cn/cn/xxgk/szgg/tzgg/ | grep "$Date" > $Text  #The curren
 	pandoc -f html -t markdown $Text1 -o $MDText	
 	sed '1s/^/深圳政府官网通知    /g' $MDText | sed 's/\.\//http:\/\/www.sz.gov.cn\/cn\/xxgk\/szgg\/tzgg\//g' | sed 's/ \".*\"//g' > $MDText1
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText1" "深圳政府官网"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText1" "深圳政府官网"
 	
 
 # 2.-----------------------
@@ -42,7 +42,7 @@ curl http://fzb.sz.gov.cn/xxgk/qt/gzdt/ | grep "href=.*201611" | sed 's/href=\"\
 iconv -f GB2312 -t UTF-8 $Text > $Text1						# Convert codes to UTF otherwise failing to grab content.
 pandoc -f html -t markdown $Text1 | sed '1s/^/*深圳市府法制办通知公告*    /g' > $MDText		
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "深圳市法制办"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText" "深圳市法制办"
 
 # 4.-----------------------
 
