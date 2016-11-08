@@ -1,18 +1,20 @@
 #!/bin/bash
 #Collecting the call-for-opinion notices from some Ministries of the State Counsel.
 # Added at 09.08.2016
+# Modified at 11.08.2016
 
 
 . $HOME/CSObot/variables.sh "gwy-bw"
 
 # 1.-----------------------
 
-wget www.sda.gov.cn/WS01/CL0014/ -O $Text
-cat $Text | grep -2 "$Month1" | iconv -f GB2312 -t UTF-8 | sed 's/\.\./http:\/\/www.sda.gov.cn\/WS01/g' > $Text1
+curl www.sda.gov.cn/WS01/CL0014/ | grep -2 "$Month1" | iconv -f GB2312 -t UTF-8 | sed 's/\.\./http:\/\/w
+ww.sda.gov.cn\/WS01/g' > $Text
 
-        pandoc -f html -t markdown $Text1 | sed '1s/^/*国家食品药品监督总局征集意见*     /g' > $MDText
+        pandoc -f html -t markdown $Text | sed '1s/^/*国家食品药品监督总局征集意见----*     /g' > $MDTex
+t
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "国家食品药品监督总局"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText" "国家食品药品监督总局"
 
 # 2.------------------------
 
@@ -25,7 +27,7 @@ curl http://www.moe.gov.cn/jyb_xwfb/s248/ | grep "href=.*$Month" | sed 's/=\"\./
 
         pandoc -f html -t markdown_github $Text | sed '1s/^/**教育政策和教育部門規章**     /g' | sed 's/ \".*\"//g' > $MDText
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "教育部"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText" "教育部"
 
 # 3.------------------------
 
@@ -33,7 +35,7 @@ curl http://www.nhfpc.gov.cn/zhuzhan/gongw/lists.shtml | grep "href=.*$Month" | 
 
         pandoc -f html -t markdown_github $Text | sed '1s/^/**衛生計生委文件發佈**     /g' | sed 's/ \".*\"//g' > $MDText
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "卫生计生委"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText" "卫生计生委"
 
 # 4.------------------------
 
@@ -41,14 +43,14 @@ curl http://www.mohrss.gov.cn/SYrlzyhshbzb/zcfg/ | grep "href=.*$Month" | sed 's
 
         pandoc -f html -t markdown_github $Text | sed '1s/^/**人社部文件發佈**     /g' | sed 's/ \".*\"//g' > $MDText
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "人社部"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText" "人社部"
 
 # 5.------------------------
 curl http://www.mohurd.gov.cn/wjfb/index.html | grep "href=.*$Month" > $Text
 
         pandoc -f html -t markdown_github $Text | sed '1s/^/**住建部文件發佈**     /g' > $MDText
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "住建部"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText" "住建部"
 
 # 6.------------------------
 curl http://www.miit.gov.cn/n1146295/n1652858/index.html | grep -2 "href=.*$Month1" | grep -v "href=.*$Month1" | sed 's/\.\.\/\.\./http:\/\/www.miit.gov.cn/g' > $Text
@@ -60,7 +62,7 @@ curl http://www.miit.gov.cn/n1146295/n1146557/index.html | grep -2 "$Month1" | s
 
         pandoc -f html -t markdown_github $Text | sed '1s/^/**工信部文件和規章發佈**     /g' > $MDText
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText" "工信部"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText" "工信部"
 
 echo "Done. Sended to TGbots."
 echo

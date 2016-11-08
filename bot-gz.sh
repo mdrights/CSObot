@@ -6,8 +6,8 @@ curl http://www.gzlo.gov.cn/sofpro/bmyyqt/gzsfzb/lfzqyj/opinion.jsp | sed -n -e 
 
         sed 's/href=/href=http:\/\/www.gzlo.gov.cn/g' $Text > $Text1
         pandoc -f html -t markdown $Text1 -o $MDText
-        sed '1s/^/*广州市府法制办征求意见*    /g' $MDText > $MDText1
+        sed '1s/^/*广州市府法制办征求意见*——    /g' $MDText > $MDText1
 
-. $HOME/CSObot/toMe.sh "$Text" "$MDText1" "广州市法制办"
+. $HOME/CSObot/toAll.sh "$Text" "$MDText1" "广州市法制办"
 
 exit
