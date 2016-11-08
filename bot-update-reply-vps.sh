@@ -1,17 +1,20 @@
 #!/bin/bash
-# update-new-msg.sh
+# bot-update-reply-vps.sh (for formal vps use)
 # 2016.07.31
-# 1.0.0 alpha
+# Modified at 2016.11.08
 
 # Set file receiving original updates. 
-Update="$HOME/github/CSObot/updates1.json"
-Update1="$HOME/github/CSObot/updates1.txt"
-NewMsg="$HOME/github/CSObot/new-message.txt"
-IdList="$HOME/github/CSObot/id-list.txt"
-Cmd_Rp="$HOME/github/CSObot/commands-reply.txt"
-MsgIdNew="$HOME/github/CSObot/message-id-new.txt"
-MsgIdOld="$HOME/github/CSObot/message-id-old.txt"
+BotDir="$HOME/CSObot"                    # May subject to change in other machines.
+Update="$BotDir/updates1.json"
+Update1="$BotDir/updates1.txt"
+NewMsg="$BotDir/new-message.txt"
+IdList="$BotDir/id-list.txt"
+Cmd_Rp="$BotDir/commands-reply.txt"
+MsgIdNew="$BotDir/message-id-new.txt"
+MsgIdOld="$BotDir/message-id-old.txt"
 
+
+## Start -----------------------------
 
 if [ ! -x $Idlist ];then
 	touch $Idlist

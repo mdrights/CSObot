@@ -1,14 +1,16 @@
 #!/bin/bash
-# update-new-msg.sh
+# bot-update-reply-beta.sh (for local testing)
 # 2016.07.31
-# 1.0.0 alpha
+# Modified at 2016.11.08
+
+BotDir="$HOME/CSObot"
+IdList="$BotDir/id-list.txt"
+Cmd_Rp="$BotDir/commands-reply.txt"
 
 # Set file receiving original updates. 
 Update="$HOME/updates1.json"
 Update1="$HOME/updates1.txt"
 NewMsg=$HOME/new-message.txt
-IdList="$HOME/github/CSObot/id-list.txt"
-Cmd_Rp="$HOME/github/CSObot/commands-reply.txt"
 MsgIdNew=$HOME/message-id-new.txt
 MsgIdOld=$HOME/message-id-old.txt
 
@@ -32,7 +34,7 @@ send_msg () {
 		if [ -n "$Cmd_rv" ]; then
 		echo $Cmd_rv 
 		Rpl="`grep "$Cmd_rv" $Cmd_Rp | awk -F : '{ print $2 ; }'`"     # Grab the correct answer.
-		proxychains4 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&text=$Rpl&parse_mode=Markdown" 1&>/dev/null
+		proxychains w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&text=$Rpl&parse_mode=Markdown" 1&>/dev/null
 		break
 		fi
 	done
@@ -40,11 +42,11 @@ send_msg () {
 	if [ -z "$Cmd_rv" ]; then
 	Feedbk=`awk -F \" '$32=="text" { print $34 ; }' $NewMsg`
 	echo "There is a feedback: $Feedbk."
-		proxychains4 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$Feedbk&parse_mode=Markdown" 1&>/dev/null
+		proxychains w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=64960773&text=$Feedbk&parse_mode=Markdown" 1&>/dev/null
 	
 	else
 				# An empty message. Ask what he/she wanna to say.
-		proxychains4 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&parse_mode=Markdown&text=Sorry, what did you say?" 1&>/dev/null
+		proxychains w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$1&parse_mode=Markdown&text=Sorry, what did you say?" 1&>/dev/null
 	fi
 }
 
@@ -73,7 +75,7 @@ grab_msg () {
 	else
 		echo "This is an new id !"
 		echo "$MsgId" >> $IdList    # Put the new id into the list.
-		proxychains4 w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$MsgId&parse_mode=Markdown&text=Hi,there! 很高兴带上我～" 1&>/dev/null
+		proxychains w3m "https://api.telegram.org/bot260947680:AAF87IQ2967PLVOhVWdU2xlGZnHz5_gq49o/sendmessage?chat_id=$MsgId&parse_mode=Markdown&text=Hi,there! 很高兴带上我～" 1&>/dev/null
 	fi
 }
 
