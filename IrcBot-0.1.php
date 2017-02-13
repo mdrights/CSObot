@@ -4,30 +4,30 @@
 
 $server = '94.125.182.252';
 $port = 6667;
-$nickname = 'MDbot';
-$ident = 'mdrightsBot';
-$gecos = 'Mdrights first testing bot';
-$channel = '#GentooWithoutJUJU';
+$nickname = 'CSObot';
+$ident = 'CSOBot';
+$gecos = 'A bot helping Civil Society Organisations in China.';
+$channel = '#DigitalRightsCN';
 
 function check_error( $var ) {
-if ( $var === false ){
-  $errorCode = socket_last_error();
-  $errorString = socket_strerror( $errorCode );
-  die( "Error $errorCode: $errorString\n" );
-}
+  if ( $var === false ){
+    $errorCode = socket_last_error();
+    $errorString = socket_strerror( $errorCode );
+    die( "Error $errorCode: $errorString\n" );
+  }
 }
 
 $socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP ); //套接字地址
 
 check_error( $socket );
 
-$bind = socket_bind( $socket, "127.0.0.1", 12345 );
+#$bind = socket_bind( $socket, "127.0.0.1", 12345 );
 
-check_error( $bind );
+#check_error( $bind );
 
-$listen = socket_listen( $socket );
+#$listen = socket_listen( $socket );
 
-check_error( $listen );
+#check_error( $listen );
 
 $connect = socket_connect( $socket, $server, $port );
 
@@ -62,9 +62,21 @@ while ( is_resource( $socket ) ) {
 	socket_write( $socket, 'JOIN ' . $channel . "\r\n" );
   }
 
-  if ( $d[3] == ':@moo' ) {
+
+  switch ($d[3]) {
+  case ':@moo':
 	$moo = "M" . str_repeat( "o", mt_rand(2, 15) );
 	socket_write( $socket, 'PRIVMSG ' . $d[2] . " :$moo\r\n" );
+  break;
+  case ':@whoareyou':
+	$word = "I am a bot monitoring Chinese governments :)";
+	socket_write( $socket, 'PRIVMSG ' . $d[2] . " :$word\r\n" );
+
+  break;
+  case ':@uptime':
+	$uptime = `uptime`;
+	socket_write( $socket, 'PRIVMSG ' . $d[2] . " :$uptime\r\n" );
+  break;
   }
 }
 ?>
