@@ -26,8 +26,8 @@ A Telegram bot serving the civil society in China.
 
 Hope the bot would help to monitoring the Govs in China !
 
-- 总之，~~您有哪些需要都可以联系我添加。
-- 有兴趣可联系： psychi:matrix.org（或者发issue） 
-- 部分消息会被推送到电报频道：公共政策监察 （https://telegram.me/monitor_gov )~~
+- 总之，~~您有哪些需要都可以联系我添加。~~
+- ~~有兴趣可联系： psychi:matrix.org（或者发issue） ~~
+- ~~部分消息会被推送到电报频道：公共政策监察 （https://telegram.me/monitor_gov )~~
 
 （最后更新时间：2017-04)
