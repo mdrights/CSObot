@@ -35,7 +35,7 @@ print 'Socket connected to ' + remote_ip
 # Associating:
 
 # channel = "#gentoowithoutjuju"
-channel = "#publipolicy-cn"
+channel = "#publicpolicy-cn"
 botnick = "CSObot"
 gecos = 'A bot helping Civil Society Organisations in China.'
 command = ''
@@ -45,14 +45,15 @@ irc.send("USER " + gecos + "* 8 :" + gecos + "\n")
 irc.send("JOIN " + channel + "\n")
 #irc.send("PRIVMSG" + channel + " " + command + " " + "\n")
 
+
 # Send message from files
 
-# data = open('xxxxxx', 'rU')
+data = open('/tmp/bot-ngo-cn.md', 'rU')
 
-#try:
-#    message = data.read()
-#finally:
-#    data.close()
+try:
+    message = data.read()
+finally:
+    data.close()
 
 
 # Receive data
@@ -61,15 +62,19 @@ while True:
     reply = irc.recv(4096)
     print reply
 
-    message = "I am a silly bot."
+    code = reply.split()
+#    print code[1]
 
-    try:
-        irc.send("PRIVMSG" + " " + channel + " :" + message + "\r\n")
-    except socket.error, msg:
-        print 'Oops, failed: ' +  str(msg[0]) + ': ' + msg[1]
-        sys.exit()
-    finally:
-        print 'Message sent successfully.'
+    if code[1] == '353':
+#        message = "I am a silly bot."
+        try:
+            irc.sendall("PRIVMSG" + " " + channel + " :" + message + "\r\n")
+        except socket.error, msg:
+            print 'Oops, failed: ' +  str(msg[0]) + ': ' + msg[1]
+            sys.exit()
+        finally:
+            print 'Message sent.'
+            break
 
 irc.close()
 
