@@ -61,10 +61,10 @@ while True:
     reply = irc.recv(4096)
     print reply
 
-    message = 'I am a silly bot.'
+    message = "I am a silly bot."
 
     try:
-        irc.send("PRIVMSG" + " " + channel + " " + message + "\r\n")
+        irc.send("PRIVMSG" + " " + channel + " :" + message + "\r\n")
     except socket.error, msg:
         print 'Oops, failed: ' +  str(msg[0]) + ': ' + msg[1]
         sys.exit()
