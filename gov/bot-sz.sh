@@ -4,17 +4,18 @@
 ## It only sends to me.
 
 
-. $HOME/CSObot/variables.sh "sz"
+#. $HOME/CSObot/variables.sh "sz"
+. variables.sh "sz"
 
 # 1.-----------------------
 
-curl http://www.sz.gov.cn/cn/xxgk/szgg/tzgg/ | grep "$Date" > $Text  #The current day.
+wget --user-agent="Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0" -O - http://www.sz.gov.cn/cn/xxgk/szgg/tzgg/ | grep "$Date" > $Text
 
 	iconv -f GB2312 -t UTF-8 $Text > $Text1
 	pandoc -f html -t markdown $Text1 -o $MDText	
-	sed '1s/^/深圳政府官网通知    /g' $MDText | sed 's/\.\//http:\/\/www.sz.gov.cn\/cn\/xxgk\/szgg\/tzgg\//g' | sed 's/ \".*\"//g' > $MDText1
+	sed -i -e '1s/^/----深圳政府官网通知----/g' -e 's/\.\//http:\/\/www.sz.gov.cn\/cn\/xxgk\/szgg\/tzgg\//g' -e 's/ \".*\"//g' $MDText
 
-. $HOME/CSObot/toAll.sh "$Text" "$MDText1" "深圳政府官网"
+#. $HOME/CSObot/toAll.sh "$Text" "$MDText1" "深圳政府官网"
 	
 
 # 2.-----------------------
@@ -36,15 +37,14 @@ curl http://www.sz.gov.cn/cn/xxgk/szgg/tzgg/ | grep "$Date" > $Text  #The curren
 
 # 3.-----------------------
 
-curl http://fzb.sz.gov.cn/xxgk/qt/tzgg/ | grep "href=.*$Month" | sed 's/href=\"\./href=\"http:\/\/fzb.sz.gov.cn\/xxgk\/qt\/tzgg/g' > $Text
-curl http://fzb.sz.gov.cn/xxgk/qt/gzdt/ | grep "href=.*201611" | sed 's/href=\"\./href=\"http:\/\/fzb.sz.gov.cn\/xxgk\/qt\/tzgg/g' >> $Text
+#curl http://fzb.sz.gov.cn/xxgk/qt/tzgg/ | grep "href=.*$Month" | sed 's/href=\"\./href=\"http:\/\/fzb.sz.gov.cn\/xxgk\/qt\/tzgg/g' > $Text
+#curl http://fzb.sz.gov.cn/xxgk/qt/gzdt/ | grep "href=.*201611" | sed 's/href=\"\./href=\"http:\/\/fzb.sz.gov.cn\/xxgk\/qt\/tzgg/g' >> $Text
 
-iconv -f GB2312 -t UTF-8 $Text > $Text1						# Convert codes to UTF otherwise failing to grab content.
-pandoc -f html -t markdown $Text1 | sed '1s/^/*深圳市府法制办通知公告*    /g' > $MDText		
+#iconv -f GB2312 -t UTF-8 $Text > $Text1						# Convert codes to UTF otherwise failing to grab content.
+#pandoc -f html -t markdown $Text1 | sed '1s/^/*深圳市府法制办通知公告*    /g' > $MDText		
 
-. $HOME/CSObot/toAll.sh "$Text" "$MDText" "深圳市法制办"
+#. $HOME/CSObot/toAll.sh "$Text" "$MDText" "深圳市法制办"
 
 # 4.-----------------------
 
-echo
 exit 0

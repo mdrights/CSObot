@@ -4,8 +4,8 @@
 # 2.0
 
 
-# . $HOME/CSObot/variables.sh "ngo-cn"
-. variables.sh "ngo-cn"
+. $HOME/CSObot/variables.sh "ngo-cn"
+#. variables.sh "ngo-cn"
 
 # echo "----Today's news from NGOCN.net, $Date1.----" > $Text
 
