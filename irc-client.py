@@ -50,10 +50,10 @@ irc.send("JOIN " + channel + "\n")
 
 data = open('/tmp/bot-ngo-cn.md', 'rU')
 
-try:
-    message = data.read()
-finally:
-    data.close()
+#try:
+#   message = data.read()
+#finally:
+#    data.close()
 
 
 # Receive data
@@ -66,16 +66,12 @@ while True:
 #    print code[1]
 
     if code[1] == '353':
-#        message = "I am a silly bot."
-        try:
-            irc.sendall("PRIVMSG" + " " + channel + " :" + message + "\r\n")
-        except socket.error, msg:
-            print 'Oops, failed: ' +  str(msg[0]) + ': ' + msg[1]
-            sys.exit()
-        finally:
-            print 'Message sent.'
-            break
+        for message in data:
+            irc.send("PRIVMSG" + " " + channel + " :" + message + "\r\n")
+#            print 'Message sent.'
+        break
 
 irc.close()
+print 'Done!'
 
 
