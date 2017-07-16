@@ -48,7 +48,7 @@ irc.send("JOIN " + channel + "\n")
 
 # Send message from files
 
-data = open('/tmp/bot-ngo-cn.md', 'rU')
+data = open('/tmp/bot-final.md', 'rU')
 
 #try:
 #   message = data.read()

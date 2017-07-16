@@ -4,16 +4,18 @@
 ## It only sends to me.
 
 
-#. $HOME/CSObot/variables.sh "sz"
-. variables.sh "sz"
+. $HOME/CSObot/variables.sh "sz"
+# . variables.sh "sz"
 
 # 1.-----------------------
 
-wget --user-agent="Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0" -O - http://www.sz.gov.cn/cn/xxgk/szgg/tzgg/ | grep "$Date" > $Text
+wget --follow-tags="<A>" --user-agent="Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0" -O - http://www.sz.gov.cn/cn/xxgk/zfxxgj/tzgg/ | grep -a "$Date" > $Text
 
 	iconv -f GB2312 -t UTF-8 $Text > $Text1
 	pandoc -f html -t markdown $Text1 -o $MDText	
-	sed -i -e '1s/^/----深圳政府官网通知----/g' -e 's/\.\//http:\/\/www.sz.gov.cn\/cn\/xxgk\/szgg\/tzgg\//g' -e 's/ \".*\"//g' $MDText
+	sed -i -e '1s/^/----深圳政府官网通知----/g' -e 's/\.\//http:\/\/www.sz.gov.cn\/cn\/xxgk\/zfxxgj\/tzgg\//g' -e 's/ \".*\"//g' $MDText
+
+cat $MDText >> $Final
 
 #. $HOME/CSObot/toAll.sh "$Text" "$MDText1" "深圳政府官网"
 	
