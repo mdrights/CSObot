@@ -1,33 +1,31 @@
 ## CSObot
-A Telegram bot serving the civil society in China. 
+
+- A Telegram bot serving the civil society, as well as monitoring governments in China. 
+- 一個幫助中國的公民社會組織，且監察中國政府的機器人。
+- 2.0 版更新：將推送平臺從原來的Telegram 改爲IRC (Freenode.net)。
 
 ## This bot will grab and push:  
-1. News and notices from several Governments' websites (see below);
-2. Laws, ordinances and regulations which are under the stage of public participation;
-3. Newly released laws, ordinances and regulations.
+- 目前推送：
+- ngocn.net
+- [深圳政府通知公告](http://www.sz.gov.cn/cn)
 
-## List of Gov Websites: 
-	(refer to the list inside the bot for the latest update :)
-1. The State Council, and its Law affair Office;
-2. National "Peoples'" Congress;
-3. The departments/Ministries of the State Council (see below for details);
-4. Guangdong Provincial Gov;
-5. Guangzhou and Shenzhen Gov;
+## Visions:
+- 可能將實現的功能：
+- 在網絡日漸惡化的中國，捍衛網絡自由，儘量協助網絡信息的自由傳播，突破封鎖。
+- 微信公衆號的備份及web化（正在開發）
+
+## How to:
+- 如何訂閱：
+- 請使用IRC客戶端（如Hexchat, Pidgin）
+- 選擇 chat.freenode.net，進入　#publicpolicy-cn 即可。
+- 或從瀏覽器進入也可：https://webchat.freenode.net/
+- ps.無須註冊（只需起個暱稱）
+- 通過Matrix（Riot.im）網絡亦可連入本頻道：#freenode_#publicpolicy-cn:matrix.org (與IRC同步）
+
+- PS:該頻道還有深圳市部分政府部門的消息訂閱。
 
 
-**每日追踪的站点**  
-- 国务院法制办法规草案征集；
-- 国务院办公厅发文；
-- 国务院新出台行政法规和部门规章；
-- 全国人大新法律和报告发布，及正在征求意见的法律草案；
-- 国务院的一些部委的文件发布和/或征求意见（目前有：教育部、卫计委、人社部、工信部）；
-- 广东省、广州市和深圳市法规规章及意见征集。
-- NGOCN.net新闻；
 
-Hope the bot would help to monitoring the Govs in China !
+**有兴趣可联系： psychi:matrix.org（或者发issue）**
 
-- 总之，~~您有哪些需要都可以联系我添加。~~
-- ~~有兴趣可联系： psychi:matrix.org（或者发issue） ~~
-- ~~部分消息会被推送到电报频道：公共政策监察 （https://telegram.me/monitor_gov )~~
-
-（最后更新时间：2017-04)
+（最后更新时间：2017-07; 註：重啓本項目)
