@@ -17,7 +17,4 @@ sed -i '1s/^/----Today news from NGOCN.net: /g' $MDText
 
 cat $MDText >> $Final
 
-# . $HOME/CSObot/toAll.sh "$Text" "$MDText" "NGOCN.net"
 
-echo "News had been sent."
-exit 0

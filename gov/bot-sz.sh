@@ -1,7 +1,6 @@
 #!/bin/bash
 ## Grab notices, news and new-release of policies on SZ Government's website.
 ## Initiated at 2016-08-05
-## It only sends to me.
 
 
 . $HOME/CSObot/variables.sh "sz"
@@ -49,4 +48,3 @@ cat $MDText >> $Final
 
 # 4.-----------------------
 
-exit 0
