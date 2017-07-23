@@ -1,5 +1,6 @@
 #!/bin/bash
-#
+## This script tries to crawl the notorious, closed webpages of Wechat Public Platform (公衆號), in the help from weixin.sogou.com . It's still under development and thus may not be successful all the time since Wechat's anti-crawling measurements are changing.
+## Written by MDrights, under BSD two-clauses License.
 
 set -eu
 
@@ -27,7 +28,14 @@ wget --user-agent="Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/
 # Parse JSON in the page
 echo "Parse JSON in the page"
 
-sed -e 's/[{}]/''/g' $TMP/$Page1 | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' > $TMP/$Page2
+sed -e 's/[{}]//g' \
+    -e 's/\[//g' \
+    -e 's/\]//g' $TMP/$Page1 |\
+awk '{
+	n=split($0,a,","); 
+	for (i=1; i<=n; i++) 
+		print a[i]
+     }' > $TMP/$Page2
 
 # Absorb the links of articles in the homepage, and parse them.
 echo "Absorb the links of articles in the homepage, and parse them."
@@ -42,12 +50,13 @@ pageDir="$HOME/$GZH"
 
 [[ ! -d "$pageDir" ]] && mkdir $pageDir
 
-n=1
-for link in $links
-do
-	wget --user-agent="Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0" -O "$pageDir/$n.html"
-	n=$n+1
-done
+#n=1
+#for link in $links
+#do
+
+wget --user-agent="Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0" -i "$TMP/$LINK1" -O "$pageDir"
+
+#done
 
 echo "Done!"
 exit
