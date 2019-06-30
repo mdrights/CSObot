@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 ## Written by MDrights, at July 12, 2017.
-## Version 0.0
+## Changelog
+# 2019.06.30    revised.
+
 
 import socket
 import sys
@@ -34,8 +36,7 @@ print 'Socket connected to ' + remote_ip
 
 # Associating:
 
-# channel = "#gentoowithoutjuju"
-channel = "#publicpolicy-cn"
+channel = "#digitalrightscn"
 botnick = "CSObot"
 gecos = 'A bot helping Civil Society Organisations in China.'
 command = ''
@@ -60,15 +61,16 @@ data = open('/tmp/bot-final.md', 'rU')
 
 while True:
     reply = irc.recv(4096)
-    print reply
+#    print reply
 
     code = reply.split()
 #    print code[1]
 
     if code[1] == '353':
         for message in data:
+            print 'Sending: ' + message
             irc.send("PRIVMSG" + " " + channel + " :" + message + "\r\n")
-#            print 'Message sent.'
+            #print 'Message sent.'
         break
 
 irc.close()
