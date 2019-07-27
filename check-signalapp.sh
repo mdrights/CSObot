@@ -7,6 +7,7 @@
 
 
 TMP=/tmp
+SELF_PATH=$(dirname $0)
 LOG_FILE=$TMP/csobot-signal.log
 VER_FILE="$TMP/latest.json"
 WEB_URL="https://updates.signal.org/android/latest.json"
@@ -28,22 +29,26 @@ echo "Current Signal version: $CUR_VERSION"
 
 
 # Download latest.json.
-echo "Checking Signal website for new version of Signal."
+echo "Checking Signal website for new version of Signal." |tee -a $LOG_FILE
 cd $TMP
-curl -O $WEB_URL || echo "Downloading latest.json FAILED."
+curl -O $WEB_URL || echo "Downloading latest.json FAILED." |tee -a $LOG_FILE
 cd -
 
 NEW_VERSION=$($JQ '.versionName' $VER_FILE)
-echo "New Signal version: $NEW_VERSION"
+echo "New Signal version: $NEW_VERSION" |tee -a $LOG_FILE
 
 # Compare if there is a new version.
 if [[ $CUR_VERSION < $NEW_VERSION ]]; then
-	echo "New Signal(Android without GSM) version found!"
+	echo "New Signal(Android without GSM) version found!" |tee -a $LOG_FILE
 	APK_URL=$($JQ '.url' $VER_FILE)
 	APK_SHA=$($JQ '.sha256sum' $VER_FILE)
-	echo "Download link: $APK_URL"
-	echo "SHA256SUM: $APK_SHA"
+	echo "Download link: $APK_URL" |tee -a $LOG_FILE
+	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
 fi
+
+# Send the link
+/usr/bin/torsocks python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
+[[ $? -eq 0 ]] && echo "The link has been sent." |tee -a $LOG_FILE
 
 # Download the Signal apk.
 exit
