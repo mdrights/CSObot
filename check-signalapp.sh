@@ -29,13 +29,13 @@ echo "Current Signal version: $CUR_VERSION"
 
 
 # Download latest.json.
-echo "Checking Signal website for new version of Signal." |tee -a $LOG_FILE
+echo "Checking Signal website for new version of Signal." |tee $LOG_FILE
 cd $TMP
 curl -O $WEB_URL || echo "Downloading latest.json FAILED." |tee -a $LOG_FILE
 cd -
 
 NEW_VERSION=$($JQ '.versionName' $VER_FILE)
-echo "New Signal version: $NEW_VERSION" |tee -a $LOG_FILE
+echo "Latest Signal version: $NEW_VERSION" |tee -a $LOG_FILE
 
 # Compare if there is a new version.
 if [[ $CUR_VERSION < $NEW_VERSION ]]; then
@@ -44,6 +44,8 @@ if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	APK_SHA=$($JQ '.sha256sum' $VER_FILE)
 	echo "Download link: $APK_URL" |tee -a $LOG_FILE
 	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
+else
+	echo "No updates since last check." |tee -a $LOG_FILE
 fi
 
 # Send the link
