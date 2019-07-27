@@ -52,7 +52,7 @@ FnTestCN()
 
 	cd -
 	# Send out the data
-	/usr/bin/torsocks python2 $SELF_PATH/irc-send-oftc.py
+	/usr/bin/torsocks python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
 
 	if [[ $? -eq 0 ]] && [[ $ret -eq 0 ]]; then
 		echo "==== The data has been sent. ====" |tee -a $LOG_FILE
