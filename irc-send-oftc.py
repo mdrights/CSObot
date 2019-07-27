@@ -8,6 +8,8 @@
 import socket
 import sys
 
+content_file = sys.argv[1]
+
 # Create a Socket
 
 try:
@@ -49,8 +51,8 @@ irc.send("JOIN " + channel + "\n")
 
 
 # Send message from files
-#data = open('/tmp/aqi-latest.json', 'rU')
-data = open('/tmp/run-ooniprobe.log', 'rU')
+#data = open('/tmp/run-ooniprobe.log', 'rU')
+data = open(content_file, 'rU')
 
 #try:
 #   message = data.read()
@@ -65,7 +67,7 @@ while True:
 #    print reply
 
     code = reply.split()
-    print code
+#    print code
 
     try:
     #    if code[-7] == '366':   # Check the reversed 7th element when connecting to OFTC normally, but should check the reversed 13th element when using Tor.

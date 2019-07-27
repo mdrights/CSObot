@@ -7,6 +7,8 @@
 import socket
 import sys
 
+content_file = sys.argv[1]
+
 # Create a Socket
 
 try:
@@ -48,8 +50,8 @@ irc.send("JOIN " + channel + "\n")
 
 
 # Send message from files
-
-data = open('/tmp/bot-final.md', 'rU')
+#data = open('/tmp/bot-final.md', 'rU')
+data = open(content_file, 'rU')
 
 #try:
 #   message = data.read()
