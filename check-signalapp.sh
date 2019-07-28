@@ -12,11 +12,23 @@ LOG_FILE=$TMP/csobot-signal.log
 VER_FILE="$TMP/latest.json"
 WEB_URL="https://updates.signal.org/android/latest.json"
 
+# Check the prerequisites.
 JQ=$(/usr/bin/which jq 2>/dev/null)
 if [[ -z $JQ ]]; then
-	echo "Oops, can not find jq tool. Quit."
+	echo "Oops, can not find jq tool. Quit." |tee $LOG_FILE
 	exit 1
 fi
+
+FFSEND=$(/usr/bin/which ffsend 2>/dev/null)
+if [[ -z $FFSEND ]]; then
+	echo "Oops, can not find ffsend tool. Quit." |tee $LOG_FILE
+	exit 1
+fi
+
+if ! pgrep ^tor ; then
+	echo "Oops, Tor is not running." |tee $LOG_FILE
+fi
+
 
 # Get current Signal version on the website.
 if [[ -r $VER_FILE ]]; then
@@ -37,6 +49,24 @@ cd -
 NEW_VERSION=$($JQ '.versionName' $VER_FILE)
 echo "Latest Signal version: $NEW_VERSION" |tee -a $LOG_FILE
 
+FnFFsend()
+{
+# Download the Signal apk.
+APK_NAME="${APK_URL##*/}"
+cd $TMP
+curl -O $APK_URL || echo "Downloading Signal app FAILED." |tee -a $LOG_FILE
+cd -
+
+# Send it to Firefox Send service.
+if [[ -r $TMP/$APK_NAME ]]; then
+	echo "Uploading Signal apk to Firefox Send."
+	APK_FF_URL=$($FFSEND -Iy upload -q --downloads 50 $TMP/$APK_NAME)
+	echo "Firefox Send link: $APK_FF_URL" |tee -a $LOG_FILE
+else
+	echo "FAIL $TMP/$APK_NAME not readable!" |tee -a $LOG_FILE
+fi
+}
+
 # Compare if there is a new version.
 if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	echo "New Signal(Android without GSM) version found!" |tee -a $LOG_FILE
@@ -44,6 +74,7 @@ if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	APK_SHA=$($JQ '.sha256sum' $VER_FILE)
 	echo "Download link: $APK_URL" |tee -a $LOG_FILE
 	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
+	FnFFsend
 else
 	echo "No updates since last check." |tee -a $LOG_FILE
 fi
@@ -52,7 +83,7 @@ fi
 /usr/bin/torsocks python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
 [[ $? -eq 0 ]] && echo "The link has been sent." |tee -a $LOG_FILE
 
-# Download the Signal apk.
+
 exit
 
 
