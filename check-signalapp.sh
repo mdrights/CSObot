@@ -52,16 +52,19 @@ echo "Latest Signal version: $NEW_VERSION" |tee -a $LOG_FILE
 FnFFsend()
 {
 # Download the Signal apk.
-APK_NAME="${APK_URL##*/}"
 cd $TMP
+APK_URL=$(echo $APK_URL |tr -d '"')
+APK_NAME=${APK_URL##*/}
 curl -O $APK_URL || echo "Downloading Signal app FAILED." |tee -a $LOG_FILE
 cd -
 
 # Send it to Firefox Send service.
-if [[ -r $TMP/$APK_NAME ]]; then
+if [[ -r "$TMP/$APK_NAME" ]]; then
 	echo "Uploading Signal apk to Firefox Send."
-	APK_FF_URL=$($FFSEND -Iy upload -q --downloads 50 $TMP/$APK_NAME)
-	echo "Firefox Send link: $APK_FF_URL" |tee -a $LOG_FILE
+	#APK_FF_URL=$($FFSEND -Iy upload -q --downloads 50 $TMP/$APK_NAME)
+	APK_FF_URL=$($FFSEND -Iy upload -q $TMP/$APK_NAME)
+	echo "Firefox Send link (limit: 1):" |tee -a $LOG_FILE
+	echo "$APK_FF_URL" |tee -a $LOG_FILE
 else
 	echo "FAIL $TMP/$APK_NAME not readable!" |tee -a $LOG_FILE
 fi
@@ -74,7 +77,8 @@ if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	APK_SHA=$($JQ '.sha256sum' $VER_FILE)
 	echo "Download link: $APK_URL" |tee -a $LOG_FILE
 	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
-	FnFFsend
+
+	#FnFFsend 	# The sender script cannot handle too many messages.
 else
 	echo "No updates since last check." |tee -a $LOG_FILE
 fi
