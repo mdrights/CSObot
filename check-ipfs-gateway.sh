@@ -2,7 +2,7 @@
 
 # FILE check-ipfs-gateway.sh
 # Changelog
-# 2019-06-09 created
+# 2019-08-31 created. using Jay Brown's tool.
 
 LOG_FILE="/tmp/check-ipfs-gateway.log"
 RES_FILE="/tmp/ipfs-gateway-result.log"
@@ -11,11 +11,12 @@ SELF_PATH=$(dirname $0)
 IPFG="$HOME/repo/JayBrown-Tools/ipfg/ipfg"
 ret=0
 
-echo "Checking available IPFS gateway from inside GFW..." |tee $LOG_FILE
-$IPFG |tee -a $LOG_FILE || ret=1
-
+# Checking...
+$IPFG |tee $LOG_FILE || ret=1
 grep Online $LOG_FILE |awk '{ print $2 }' > $RES_FILE
 NUM_GW=$(cat $RES_FILE |wc -l)
+
+echo "Checking available IPFS gateway from inside GFW..." |tee  $LOG_FILE
 echo "Done, <$NUM_GW> are available. Run ipfs-gw to see the list." |tee -a $LOG_FILE
 
 # Send out the data
