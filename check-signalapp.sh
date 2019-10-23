@@ -23,7 +23,7 @@ fi
 FFSEND="/usr/local/bin/ffsend"
 if [[ -z $FFSEND ]]; then
 	echo "Oops, can not find ffsend tool. Quit." |tee $LOG_FILE
-	exit 1
+	#exit 1
 fi
 
 if ! pgrep ^tor ; then
