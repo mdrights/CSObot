@@ -5,10 +5,13 @@
 # 2019-07-06 add a func to parse the result.
 
 LOG_FILE="/tmp/run-ooniprobe.log"
+TEST_FILE="$HOME/.ooni/inputs/citizenlab-cn-list"
 SELF_PATH=$(dirname $0)
 JQ=$(which jq 2>/dev/null)
+OONI=$(which ooniprobe 2>/dev/null)
 
 [[ -z $JQ ]] && echo "I depend on jq but it is not installed? Quit."
+[[ -z $OONI ]] && echo "I depend on ooniprobe but it is not installed? Quit."
 
 FnParseResult()
 {
@@ -17,10 +20,7 @@ FnParseResult()
 
 	echo "Result: $ANOM of $TOTAL websites are anomaly." |tee -a $LOG_FILE
 
-
-
 }
-
 
 
 FnTestCN()
@@ -31,12 +31,12 @@ FnTestCN()
 	## Testing global test lists.
 	echo "==== $DATE ==== " |tee $LOG_FILE
 	cd
-	/usr/local/bin/ooniprobe -v blocking/web_connectivity -t 120 -f ./.ooni/inputs/data/citizenlab-test-lists_cn.txt
+	$OONI -v blocking/web_connectivity -t 120 -f $TEST_FILE
 
 	#/usr/local/bin/ooniprobe -v blocking/web_connectivity -d 91.239.100.100 -t 120 -f ./.ooni/inputs/data/my-lists_cn.txt
 	#/usr/local/bin/ooniprobe -v blocking/web_connectivity -u https://tails.boum.org
 
-	echo "==== Finished testing for CN ====" |tee -a $LOG_FILE
+	echo "==== Finished testing for CN list ====" |tee -a $LOG_FILE
 
 	# Find the latest measurement (result).
 	RET_DIR=$(find $HOME/.ooni/measurements/ -maxdepth 1 -type d |sort -r |head -n1)
@@ -52,7 +52,8 @@ FnTestCN()
 
 	cd -
 	# Send out the data
-	/usr/bin/torsocks python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
+	#/usr/bin/torsocks python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
+	python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
 
 	if [[ $? -eq 0 ]] && [[ $ret -eq 0 ]]; then
 		echo "==== The data has been sent. ====" |tee -a $LOG_FILE
