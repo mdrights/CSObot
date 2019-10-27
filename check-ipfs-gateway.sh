@@ -20,7 +20,7 @@ echo "Checking available IPFS gateway from inside GFW..." |tee  $LOG_FILE
 echo "Done, <$NUM_GW> are available. Run ipfs-gw to see the list." |tee -a $LOG_FILE
 
 # Send out the data
-/usr/bin/torsocks python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
+python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
 
 if [[ $? -eq 0 ]] && [[ $ret -eq 0 ]]; then
 	echo "==== The data has been sent. ====" |tee -a $LOG_FILE

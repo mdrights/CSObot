@@ -85,7 +85,7 @@ else
 fi
 
 # Send the link
-/usr/bin/torsocks python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
+python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
 [[ $? -eq 0 ]] && echo "The link has been sent." |tee -a $LOG_FILE
 
 
