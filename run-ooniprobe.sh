@@ -7,13 +7,13 @@
 
 PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:$PATH
 LOG_FILE="/tmp/run-ooniprobe.log"
-TEST_FILE="$HOME/.ooni/inputs/citizenlab-cn-list"
 SELF_PATH=$(dirname $0)
 JQ=$(/usr/bin/which jq 2>/dev/null)
 OONI=$(/usr/bin/which ooniprobe 2>/dev/null)
 #OONI="/usr/local/bin/ooniprobe"
 REPO="$HOME/repo/test-lists"
 RES_FILE="$HOME/.ooni/inputs/news-sites-zh.list"
+TEST_FILE="$HOME/.ooni/inputs/my-list"
 
 [[ -z $JQ ]] && echo "I depend on jq but it is not installed? Quit."
 [[ -z $OONI ]] && echo "I depend on ooniprobe but it is not installed? Quit."
@@ -21,6 +21,7 @@ RES_FILE="$HOME/.ooni/inputs/news-sites-zh.list"
 
 FnGenNewsSites()
 {
+	cd $REPO && git pull || true
 	cat $REPO/lists/cn.csv $REPO/lists/hk.csv $REPO/lists/tw.csv |grep NEWS |awk -F',' '{ print $1 }' |awk -F'/' '{ print $1$2"//"$3 }' |sort |uniq > $RES_FILE 
 
 }
@@ -50,7 +51,7 @@ FnRunTest()
 	#/usr/local/bin/ooniprobe -v blocking/web_connectivity -d 91.239.100.100 -t 120 -f ./.ooni/inputs/data/my-lists_cn.txt
 	#/usr/local/bin/ooniprobe -v blocking/web_connectivity -u https://tails.boum.org
 
-	echo "==== Test Result for list: $2 ====" |tee -a $LOG_FILE
+	echo "==== Test Result for: $2 ====" |tee -a $LOG_FILE
 
 	# Find the latest measurement (result).
 	RET_DIR=$(find $HOME/.ooni/measurements/ -maxdepth 1 -type d |sort -r |head -n1)
@@ -86,6 +87,10 @@ FnSendResult()
 
 
 ## Run them.
+# 1
+FnRunTest $TEST_FILE "Matters.news"
+FnSendResult
+# 2
 FnGenNewsSites
 FnRunTest $RES_FILE "Chinese-lang News Agencies"
 FnSendResult
