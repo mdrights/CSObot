@@ -18,6 +18,11 @@ TEST_FILE="$HOME/.ooni/inputs/my-list"
 [[ -z $JQ ]] && echo "I depend on jq but it is not installed? Quit."
 [[ -z $OONI ]] && echo "I depend on ooniprobe but it is not installed? Quit."
 
+if  ps -ef |grep ooniprobe |grep -v $0 |grep -v grep >/dev/null; then 
+	echo "It is still running. Kill it."; 
+	/usr/bin/pkill ooniprobe
+	sleep 15
+fi
 
 FnGenNewsSites()
 {
