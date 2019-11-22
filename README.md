@@ -1,9 +1,8 @@
-## CSObot (alpha)
+## CSObot (beta)
 
 - A bot serving the civil society organisations in China.
 - 一個幫助中國的公民社會組織的機器人(bot)。
 
-## This bot will grab and push:  
 - 目前推送：
 	- 推送平台：
 		- #csobot:matrix.org （Matrix 平台的房间）
@@ -18,7 +17,9 @@
 
 			ipfs-add-all 要转换的网页
 		``` 
-		> 注：第一条命令只抓取网页文字和一些简单的元素；第二条命令会抓取站内文字、部分图片和 js/css 等元素（更接近原网页但反应较前者慢——约2～5分钟）。   
+		> 注1：第一条命令只抓取网页文字和一些简单的元素；第二条命令会抓取站内文字、部分图片和 js/css 等元素（更接近原网页但反应较前者慢——约2～5分钟）。   
+
+		> 注2: 使用第二条命令时`要转换的网页`网址需要带上`https://` 或 `http://`，且末尾不能带`/`。
 
 	- `OONI probe` 探测可能被墙的华文新闻媒体网站（采用 Citizen Lab 的[cn 列表](https://github.com/citizenlab/test-lists/blob/master/lists/cn.csv), [hk 列表](https://github.com/citizenlab/test-lists/blob/master/lists/hk.csv), [tw 列表](https://github.com/citizenlab/test-lists/blob/master/lists/tw.csv)中的`NEWS`类别的url），每日执行一次。 
 		- OONI probe 报告发送到 [OONI API](https://api.ooni.io), 报告编号和被墙网站数量推送到以上平台。  
