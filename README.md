@@ -6,6 +6,7 @@
 - 目前推送：
 	- 推送平台：
 		- #csobot:matrix.org （Matrix 平台的房间）
+		- https://t.me/csobotcn (Telegram)
 		- #aqi-data-share (irc at OFTC) 
 
 	- `IPFS 转换器`：把单一网页上传到 IPFS 并返回相应 IPFS gateway 网址，可以免翻墙访问该网页（返回约15个 IPFS 网址，可任选其一，大部分经墙内测试可通）。  
@@ -17,14 +18,14 @@
 
 			ipfs-add-all 要转换的网页
 		``` 
-		> 注1：第一条命令只抓取网页文字和一些简单的元素；第二条命令会抓取站内文字、部分图片和 js/css 等元素（更接近原网页但反应较前者慢——约2～5分钟）。   
+		> 注1：第一条命令只抓取网页文字和一些简单的元素；第二条命令会抓取站内文字、部分图片和 js/css 等元素（更接近原网页但反应较慢——约2～5分钟）。   
 
 		> 注2: 使用第二条命令时`要转换的网页`网址需要带上`https://` 或 `http://`，且末尾不能带`/`。
 
-	- `OONI probe` 探测可能被墙的华文新闻媒体网站（采用 Citizen Lab 的[cn 列表](https://github.com/citizenlab/test-lists/blob/master/lists/cn.csv), [hk 列表](https://github.com/citizenlab/test-lists/blob/master/lists/hk.csv), [tw 列表](https://github.com/citizenlab/test-lists/blob/master/lists/tw.csv)中的`NEWS`类别的url），每日执行一次。 
-		- OONI probe 报告发送到 [OONI API](https://api.ooni.io), 报告编号和被墙网站数量推送到以上平台。  
 
-	- 检查`Signal (signal.org)`无谷歌框架版的更新（[官方发布网站](https://signal.org/android/apk/)），如有更新，推送下载链接和其校验码。（每日2次）
+	- 检查`[Signal](https://signal.org)`Android 无谷歌框架版的更新（[官方发布网站](https://signal.org/android/apk/)），如有更新，推送下载链接和其校验码。（每日2次）
+
+	- ~~`OONI probe` 探测可能被墙的华文新闻媒体网站（采用 Citizen Lab 的[cn 列表](https://github.com/citizenlab/test-lists/blob/master/lists/cn.csv), [hk 列表](https://github.com/citizenlab/test-lists/blob/master/lists/hk.csv), [tw 列表](https://github.com/citizenlab/test-lists/blob/master/lists/tw.csv)中的`NEWS`类别的url），每日执行一次。生成报告并发送到 [OONI API](https://api.ooni.io), 报告编号和被墙网站数量推送到以上平台。~~  
 
 
 ## Updates
@@ -37,7 +38,7 @@
 
 ## TODO
 - [x] `IPFS 转换器`：会抓取该网页站内文字、部分图片和 js/css 等元素。但不抓取站外、第三方资源。
-- [ ] 查询墙内可以的 IPFS gateway 服务（可用服务列表来自：[public gateway list](https://github.com/ipfs/public-gateway-checker/blob/master/gateways.json)）。
+- [ ] 查询墙内可用的 IPFS gateway 服务（可用服务列表来自：[public gateway list](https://github.com/ipfs/public-gateway-checker/blob/master/gateways.json)）。
 
 
 ## 什么是 Matrix 房间？
