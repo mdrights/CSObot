@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # FILE		check-signalapp.sh
 # AUTHOR	MDrights
