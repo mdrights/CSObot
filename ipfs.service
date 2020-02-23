@@ -1,0 +1,16 @@
+[Unit]
+Description=IPFS Daemon
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=simple
+User=user
+Environment=IPFS_PATH=/opt/go-ipfs/ipfsrepo
+ExecStart=/opt/go-ipfs/ipfs daemon --enable-namesys-pubsub
+ExecStop=/bin/kill -9 $MAINPID
+Restart=on-failure
+RestartSec=30
+LimitNOFILE=10240
+
+[Install]
+WantedBy=multi-user.target
