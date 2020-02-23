@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+
+regex='^!?uptime( .*)?$'
+
+if [ -n "$CONFIG" ]
+then
+    echo $regex
+    exit 0
+fi
+
+while true; do
+	uptime
+	sleep 5
+done

@@ -1,0 +1,14 @@
+[Unit]
+Description=csobot-matrix-bot
+
+[Service]
+User=user
+Group=users
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/XXX/csobot/matrix-bot/csobot-matrix.py
+ExecStop=/bin/kill -9 $MAINPID
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
