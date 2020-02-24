@@ -9,7 +9,4 @@ then
     exit 0
 fi
 
-while true; do
-	uptime
-	sleep 5
-done
+uptime

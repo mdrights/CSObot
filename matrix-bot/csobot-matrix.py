@@ -9,6 +9,7 @@ import os
 import re
 import sys
 import logging
+import schedule
 import traceback
 import subprocess
 import configparser
@@ -56,12 +57,41 @@ class TinyMatrixtBot():
             "csobot-matrix", "inviter", fallback=None)
         self.client.add_invite_listener(self.on_invite)
         self.client.add_leave_listener(self.on_leave)
+
+        myDay = self.config.get(
+            "csobot-matrix", "days", fallback=None)
+        myHour = self.config.get(
+            "csobot-matrix", "hours", fallback=None)
+        myMinute = self.config.get(
+            "csobot-matrix", "minutes", fallback=None)
+        mySecond = self.config.get(
+            "csobot-matrix", "seconds", fallback=None)
+
+        if myDay:
+            schedule.every(int(myDay)).day.do(self.cronjob)
+        if myHour:
+            schedule.every(int(myHour)).hour.do(self.cronjob)
+        if myMinute:
+            schedule.every(int(myMinute)).minutes.do(self.cronjob)
+        if mySecond:
+            schedule.every(int(mySecond)).seconds.do(self.cronjob)
+
         for room_id in self.client.rooms:
             self.join_room(room_id)
         self.client.start_listener_thread(
             exception_handler=lambda e: self.connect())
+
         while True:
+            schedule.run_pending()
             sleep(1)
+
+
+    def cronjob(self):
+        #print('\n SENDING ...')
+        for room_id in self.client.rooms:
+            room = self.client.join_room(room_id)
+            self.run_scripts_all(room, room_id)
+
 
     def connect(self):
         try:
