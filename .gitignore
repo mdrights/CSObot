@@ -1,4 +1,4 @@
 matrix-bot/matrix_client
 matrix-bot/run/*
 !matrix-bot/run/.placeholder
-matrix-bot/tiny-matrix-bot.cfg
+matrix-bot/csobot-matrix.cfg
