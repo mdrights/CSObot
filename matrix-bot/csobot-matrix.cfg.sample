@@ -6,7 +6,20 @@ token = SuperSecretToken
 #enabled_scripts = ping
 #inviter = :example\.com$
 
+# Set time schedule (intervals). (it waits all scripts to finish then start next loop).
+#days =
+#hours =
+minutes = 1
+#seconds = 5
+
+HOME = /home/user
+PATH = $HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
 #[ping]
 #whitelist = \!rOomId1:example\.com
 #blacklist = (@spammer|\!roOMid2):example\.com
 #reply = PONG!
+
+[uptime]
+whitelist = 
+#blacklist = 
