@@ -1,0 +1,50 @@
+#!/bin/bash -e
+
+# FILE		monit: grab the latest 10 messages of monit error log.
+# AUTHOR 
+# DATE		2020-02-25
+
+
+regex=''
+
+if [ -n "$CONFIG" ]
+then
+    echo $regex
+    exit 0
+fi
+
+SELF_PATH=$(dirname $0)
+LOG_FILE=/tmp/csobot-monit-alert.log
+MON_LOG=/var/log/monit/monit.log
+
+
+# Compare the last line of log with the one last time I recorded.
+LAST=$(grep error $MON_LOG |tail -n1)
+LOCAL_LAST=$(cat $LOG_FILE)
+
+if [ "$LOCAL_LAST" != "$LAST" ]; then
+        echo "New alert found! Send it."
+		
+		if [ "$(uname)" == "FreeBSD" ]; then
+			NEW_LAST=$(grep error $MON_LOG |tail -r -n10)
+		elif [ "$(uname)" == "Linux" ]; then
+			NEW_LAST=$(grep error $MON_LOG |tail -n10 |tac)
+		fi
+
+	while IFS= read -r line ; do 
+		if [ "$line" == "$LOCAL_LAST" ]; then
+			break
+		else
+			echo "> "$line
+		fi
+	done < <(echo "$NEW_LAST")
+
+		# Put new last one record to local file.
+        echo "$LAST" > $LOG_FILE
+
+else
+        echo "No new alert found. Sleeping."
+fi
+
+exit
+
