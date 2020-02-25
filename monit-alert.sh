@@ -13,10 +13,11 @@ MON_LOG=/var/log/monit/monit.log
 # Compare the last line of log with the one last time I recorded.
 LAST=$(tail -n1 $LOG_FILE)
 MSG=$(tail -n1 $MON_LOG)
+MSG2SEND=$(tail -n2 $MON_LOG)
 
 if [ "$MSG" != "$LAST" ]; then
         echo "New alert found! Send it."
-        echo "$MSG" > $LOG_FILE
+        echo "$MSG2SEND" > $LOG_FILE
 
         # Send the link
         /usr/local/bin/torsocks /usr/local/bin/python $SELF_PATH/irc-send-oftc.py $LOG_FILE
