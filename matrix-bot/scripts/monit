@@ -5,7 +5,7 @@
 # DATE		2020-02-25
 
 
-regex=''
+regex='null'
 
 if [ -n "$CONFIG" ]
 then
@@ -14,8 +14,9 @@ then
 fi
 
 SELF_PATH=$(dirname $0)
+HOST=$(hostname)
 LOG_FILE=/tmp/csobot-monit-alert.log
-MON_LOG=/var/log/monit/monit.log
+MON_LOG=/var/log/monit.log
 
 
 # Compare the last line of log with the one last time I recorded.
@@ -23,7 +24,7 @@ LAST=$(grep error $MON_LOG |tail -n1)
 LOCAL_LAST=$(cat $LOG_FILE)
 
 if [ "$LOCAL_LAST" != "$LAST" ]; then
-        echo "New alert found! Send it."
+        #echo "New alert found! Send it."
 		
 		if [ "$(uname)" == "FreeBSD" ]; then
 			NEW_LAST=$(grep error $MON_LOG |tail -r -n10)
@@ -35,15 +36,15 @@ if [ "$LOCAL_LAST" != "$LAST" ]; then
 		if [ "$line" == "$LOCAL_LAST" ]; then
 			break
 		else
-			echo "> "$line
+			echo "> $HOST | $line"
 		fi
 	done < <(echo "$NEW_LAST")
 
 		# Put new last one record to local file.
         echo "$LAST" > $LOG_FILE
 
-else
-        echo "No new alert found. Sleeping."
+#else
+        #echo "No new alert found. Sleeping."
 fi
 
 exit
