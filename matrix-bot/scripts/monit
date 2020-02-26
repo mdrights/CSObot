@@ -15,8 +15,8 @@ fi
 
 SELF_PATH=$(dirname $0)
 HOST=$(hostname)
-LOG_FILE=/tmp/csobot-monit-alert.log
-MON_LOG=/var/log/monit.log
+LOG_FILE=/tmp/csobot-monit-alert.log    # Need to be existed
+MON_LOG=/var/log/monit.log				# Should have permission
 
 
 # Compare the last line of log with the one last time I recorded.
