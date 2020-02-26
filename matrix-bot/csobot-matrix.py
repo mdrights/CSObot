@@ -3,6 +3,7 @@
 # Modified: MDrights
 # Forked from tiny-matrix-bot
 # Changelog:
+# 2020.02.26    Forked to csobot. Modified to send messages only.
 # 2019.07.21    improved as to parse and pass arguments for scripts it exec.
 
 import os
@@ -17,7 +18,7 @@ from time import sleep
 from matrix_client.client import MatrixClient
 
 logger = logging.getLogger("csobot-matrix")
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.DEBUG)  # Mark it in production
 
 
 class TinyMatrixtBot():
@@ -228,8 +229,9 @@ class TinyMatrixtBot():
         for p in output.split("\n\n"):
             for l in p.split("\n"):
                 logger.debug("script output {}".format(l))
-            room.send_text(p)
-            sleep(0.8)
+            if p:
+                room.send_text(p)
+                sleep(0.8)
 
 
 if __name__ == "__main__":
