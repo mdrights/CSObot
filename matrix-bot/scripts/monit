@@ -16,8 +16,9 @@ fi
 SELF_PATH=$(dirname $0)
 HOST=$(hostname)
 LOG_FILE=/tmp/csobot-monit-alert.log    # Need to be existed
-MON_LOG=/var/log/monit.log				# Should have permission
+MON_LOG=/var/log/monit.log		# Should have permission
 
+touch $LOG_FILE
 
 # Compare the last line of log with the one last time I recorded.
 LAST=$(grep error $MON_LOG |tail -n1)
