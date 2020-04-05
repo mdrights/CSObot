@@ -3,6 +3,7 @@
 # FILE		check-signalapp.sh
 # AUTHOR	MDrights
 # Changelog
+# 2020.04.04	0.2
 # 2019.07.27	0.1
 
 
@@ -19,12 +20,6 @@ if [[ -z $JQ ]]; then
 	exit 1
 fi
 
-#FFSEND=$(/usr/bin/which ffsend 2>/dev/null)
-FFSEND="/usr/local/bin/ffsend"
-if [[ -z $FFSEND ]]; then
-	echo "Oops, can not find ffsend tool. Quit." |tee $LOG_FILE
-	#exit 1
-fi
 
 if ! pgrep ^tor ; then
 	echo "Oops, Tor is not running." |tee $LOG_FILE
@@ -71,6 +66,32 @@ else
 fi
 }
 
+# Send it to IPFS.
+FnSendIpfs()
+{
+# Download the Signal apk.
+cd $TMP
+APK_URL=$(echo $APK_URL |tr -d '"')
+APK_NAME=${APK_URL##*/}
+curl -O $APK_URL || echo "Downloading Signal app FAILED." |tee -a $LOG_FILE
+cd -
+
+
+if [[ -r "$TMP/$APK_NAME" ]]; then
+	echo "Uploading Signal apk to the IPFS daemon on localhost."
+	HASH=$($IPFS add -q -w "$TMP/$APK_NAME"; ret=$?)
+
+	if [[ $ret -eq 0 ]] && [[ -n $HASH ]]; then
+		echo "It has been uploaded; Hash: $HASH" |tee -a $LOG_FILE
+	else
+		echo "Oops, FAILED to upload."
+	fi
+
+	echo "Oops, FAILED to download apk file."
+fi
+
+}
+
 # Compare if there is a new version.
 if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	echo "New Signal(Android without GSM) version found!" |tee -a $LOG_FILE
@@ -80,6 +101,7 @@ if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
 
 	#FnFFsend 	# The sender script cannot handle too many messages.
+	FnSendIpfs
 else
 	echo "No updates since last check." |tee -a $LOG_FILE
 fi
