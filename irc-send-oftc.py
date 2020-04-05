@@ -7,6 +7,7 @@
 
 import socket
 import sys
+import time
 
 content_file = sys.argv[1]
 
@@ -75,6 +76,7 @@ while True:
             for message in data:
                 print 'Sending Messages ...'
                 irc.send("PRIVMSG" + " " + channel + " :" + message + "\r\n")
+                time.sleep(1)
                 print 'Message sent.'
             break
     except:
