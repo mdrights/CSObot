@@ -43,13 +43,13 @@ echo "Current Signal version: $CUR_VERSION"
 
 
 # Download latest.json.
-echo "Checking Signal website for new version of Signal." |tee $LOG_FILE
+echo "Checking Signal website for new version of Signal." # |tee $LOG_FILE
 cd $TMP
 curl -O $WEB_URL || echo "Downloading latest.json FAILED." |tee -a $LOG_FILE
 cd -
 
 NEW_VERSION=$($JQ '.versionName' $VER_FILE)
-echo "Latest Signal version: $NEW_VERSION" |tee -a $LOG_FILE
+echo "Latest Signal version: $NEW_VERSION" |tee  $LOG_FILE
 
 FnFFsend()
 {
@@ -87,13 +87,13 @@ if [[ -r "$TMP/$APK_NAME" ]]; then
 	HASH=$($IPFS add -q -w "$TMP/$APK_NAME" |tail -n1; ret=$?)
 
 	if [[ $ret -eq 0 ]] && [[ -n $HASH ]]; then
-		echo "It has been uploaded; Hash: $HASH" |tee -a $LOG_FILE
+		echo "Hash: $HASH" |tee -a $LOG_FILE
 	else
-		echo "Oops, FAILED to upload."
+		echo "Oops, FAILED to upload." |tee -a $LOG_FILE
 	fi
 
 else
-	echo "Oops, FAILED to download apk file."
+	echo "Oops, FAILED to download apk file." |tee -a $LOG_FILE
 fi
 
 }
