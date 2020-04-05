@@ -20,6 +20,12 @@ if [[ -z $JQ ]]; then
 	exit 1
 fi
 
+IPFS=$(/usr/bin/which ipfs 2>/dev/null)
+if [[ -z $IPFS ]]; then
+	IPFS=$HOME/go-ipfs/ipfs
+#	echo "Oops, can not find IPFS. Quit." |tee $LOG_FILE
+#	exit 1
+fi
 
 if ! pgrep ^tor ; then
 	echo "Oops, Tor is not running." |tee $LOG_FILE
@@ -76,10 +82,9 @@ APK_NAME=${APK_URL##*/}
 curl -O $APK_URL || echo "Downloading Signal app FAILED." |tee -a $LOG_FILE
 cd -
 
-
 if [[ -r "$TMP/$APK_NAME" ]]; then
 	echo "Uploading Signal apk to the IPFS daemon on localhost."
-	HASH=$($IPFS add -q -w "$TMP/$APK_NAME"; ret=$?)
+	HASH=$($IPFS add -q -w "$TMP/$APK_NAME" |tail -n1; ret=$?)
 
 	if [[ $ret -eq 0 ]] && [[ -n $HASH ]]; then
 		echo "It has been uploaded; Hash: $HASH" |tee -a $LOG_FILE
@@ -87,6 +92,7 @@ if [[ -r "$TMP/$APK_NAME" ]]; then
 		echo "Oops, FAILED to upload."
 	fi
 
+else
 	echo "Oops, FAILED to download apk file."
 fi
 
