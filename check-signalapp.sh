@@ -107,13 +107,13 @@ if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
 
 	#FnFFsend 	# The sender script cannot handle too many messages.
-	FnSendIpfs
+	#FnSendIpfs
 else
 	echo "No updates since last check." |tee -a $LOG_FILE
 fi
 
 # Send the link
-python2 $SELF_PATH/irc-send-oftc.py $LOG_FILE
+python2.7 $SELF_PATH/irc-send-oftc.py $LOG_FILE
 [[ $? -eq 0 ]] && echo "The link has been sent." |tee -a $LOG_FILE
 
 

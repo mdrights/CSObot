@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.7
 
 # Modified: MDrights
 # Forked from tiny-matrix-bot
