@@ -40,17 +40,17 @@ else
 	echo "Latest.json not readable. Can not get current Signal version. Go ahead to download one from its website."
 	CUR_VERSION=""
 fi
-echo "Current Signal version: $CUR_VERSION"
+#echo "Current Signal version: $CUR_VERSION"
 
 
 # Download latest.json.
-echo "Checking Signal website for new version of Signal." # |tee $LOG_FILE
+#echo "Checking Signal website for new version of Signal." # |tee $LOG_FILE
 cd $TMP
 curl -sS -O $WEB_URL || echo "Downloading latest.json FAILED." |tee -a $LOG_FILE
 cd - >/dev/null 2>&1
 
 NEW_VERSION=$($JQ '.versionName' $VER_FILE)
-echo "Latest Signal version: $NEW_VERSION" |tee  $LOG_FILE
+#echo "Latest Signal version: $NEW_VERSION" |tee  $LOG_FILE
 
 
 # Send it to IPFS.
@@ -88,8 +88,8 @@ if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
 
 	#FnSendIpfs
-else
-	echo "No updates since last check." |tee -a $LOG_FILE
+#else
+#	echo "No updates since last check." |tee -a $LOG_FILE
 fi
 
 # Send the link
