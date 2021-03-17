@@ -81,15 +81,15 @@ FnSendIpfs()
 
 # Compare if there is a new version.
 if [[ $CUR_VERSION < $NEW_VERSION ]]; then
-	echo "New Signal(Android without GSM) version found!" |tee -a $LOG_FILE
+	echo "New Signal(Android without GSM) version found!" |tee  $LOG_FILE
 	APK_URL=$($JQ '.url' $VER_FILE)
 	APK_SHA=$($JQ '.sha256sum' $VER_FILE)
 	echo "Download link: $APK_URL" |tee -a $LOG_FILE
 	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
 
 	#FnSendIpfs
-#else
-#	echo "No updates since last check." |tee -a $LOG_FILE
+else
+	echo "No updates since last [Signal for non-Google Android] check." |tee  $LOG_FILE
 fi
 
 # Send the link

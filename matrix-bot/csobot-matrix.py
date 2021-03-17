@@ -18,7 +18,7 @@ from time import sleep
 from matrix_client.client import MatrixClient
 
 logger = logging.getLogger("csobot-matrix")
-logger.setLevel(logging.DEBUG)  # Mark it in production
+#logger.setLevel(logging.DEBUG)  # Mark it in production
 
 
 class TinyMatrixtBot():
@@ -69,9 +69,9 @@ class TinyMatrixtBot():
             "csobot-matrix", "seconds", fallback=None)
 
         if myDay:
-            schedule.every(int(myDay)).day.do(self.cronjob)
+            schedule.every(int(myDay)).days.do(self.cronjob)
         if myHour:
-            schedule.every(int(myHour)).hour.do(self.cronjob)
+            schedule.every(int(myHour)).hours.do(self.cronjob)
         if myMinute:
             schedule.every(int(myMinute)).minutes.do(self.cronjob)
         if mySecond:
