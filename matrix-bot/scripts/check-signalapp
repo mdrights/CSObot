@@ -47,7 +47,10 @@ fi
 #echo "Checking Signal website for new version of Signal." # |tee $LOG_FILE
 cd $TMP
 
-curl --proxy socks5://localhost:1080 -sS -O $WEB_URL || echo "Downloading latest.json FAILED." |tee -a $LOG_FILE
+#curl --proxy socks5://localhost:1080 -sS -O $WEB_URL || echo "Downloading latest.json FAILED." |tee -a $LOG_FILE
+
+export https_proxy=http://localhost:8118 && \
+curl -v -sS -O $WEB_URL || echo "Downloading latest.json FAILED." |tee -a $LOG_FILE
 
 cd - >/dev/null 2>&1
 

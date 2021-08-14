@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 ## Written by MDrights, at July 12, 2017.
 ## Changelog
 ## 2018.04.07   Updated for aqi-share project (use OFTC)
@@ -25,7 +25,7 @@ print 'Socket Created.'
 
 host = ''
 port = 6667                 # 6697
-remote_ip = '209.87.16.241'
+remote_ip = '109.74.200.93'
 
 # Connect to OFTC.net 
 
