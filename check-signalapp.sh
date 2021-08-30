@@ -3,6 +3,7 @@
 # FILE		check-signalapp.sh
 # AUTHOR	MDrights
 # Changelog
+# 2021.08.30	0.3
 # 2020.04.04	0.2
 # 2019.07.27	0.1
 
@@ -51,26 +52,6 @@ cd -
 NEW_VERSION=$($JQ '.versionName' $VER_FILE)
 echo "Latest Signal version: $NEW_VERSION" |tee  $LOG_FILE
 
-FnFFsend()
-{
-# Download the Signal apk.
-cd $TMP
-APK_URL=$(echo $APK_URL |tr -d '"')
-APK_NAME=${APK_URL##*/}
-curl -O $APK_URL || echo "Downloading Signal app FAILED." |tee -a $LOG_FILE
-cd -
-
-# Send it to Firefox Send service.
-if [[ -r "$TMP/$APK_NAME" ]]; then
-	echo "Uploading Signal apk to Firefox Send."
-	#APK_FF_URL=$($FFSEND -Iy upload -q --downloads 50 $TMP/$APK_NAME)
-	APK_FF_URL=$($FFSEND -Iy upload -q $TMP/$APK_NAME)
-	echo "Firefox Send link (limit: 1):" |tee -a $LOG_FILE
-	echo "$APK_FF_URL" |tee -a $LOG_FILE
-else
-	echo "FAIL $TMP/$APK_NAME not readable!" |tee -a $LOG_FILE
-fi
-}
 
 # Send it to IPFS.
 FnSendIpfs()
@@ -95,7 +76,6 @@ if [[ -r "$TMP/$APK_NAME" ]]; then
 else
 	echo "Oops, FAILED to download apk file." |tee -a $LOG_FILE
 fi
-
 }
 
 # Compare if there is a new version.
@@ -106,7 +86,6 @@ if [[ $CUR_VERSION < $NEW_VERSION ]]; then
 	echo "Download link: $APK_URL" |tee -a $LOG_FILE
 	echo "SHA256SUM: $APK_SHA" |tee -a $LOG_FILE
 
-	#FnFFsend 	# The sender script cannot handle too many messages.
 	#FnSendIpfs
 else
 	echo "No updates since last check." |tee -a $LOG_FILE
@@ -114,7 +93,13 @@ fi
 
 # Send the link
 python2.7 $SELF_PATH/irc-send-oftc.py $LOG_FILE
-[[ $? -eq 0 ]] && echo "The link has been sent." |tee -a $LOG_FILE
+
+if [[ $? -eq 0 ]] ; then
+	echo "The link has been sent." |tee -a $LOG_FILE
+else
+	echo "The link was not sent. Remove the state file."
+	rm $VER_FILE
+fi
 
 
 exit
