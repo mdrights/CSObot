@@ -98,7 +98,7 @@ if [[ $? -eq 0 ]] ; then
 	echo "The link has been sent." |tee -a $LOG_FILE
 else
 	echo "The link was not sent. Remove the state file."
-	rm $VER_FILE
+	rm -f $VER_FILE
 fi
 
 
