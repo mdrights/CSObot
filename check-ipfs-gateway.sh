@@ -10,19 +10,20 @@ set -euo pipefail
 
 SELF_PATH=$(dirname $0)
 LOG_FILE="/tmp/check-ipfs-gateway.log"
-RES_FILE="tmp/ipfs-gateway-result.txt"
+RES_FILE="/tmp/ipfs-gateway-result.txt"
 #IPFG=$(which ipfg 2>/dev/null)
 IPFG="$HOME/repo/csobot/ipfg-ng"
 ret=0
 
 # Run the program
-echo ">> Check remote gateway for changes."
+echo ">> Check remote gateway for changes." |tee $LOG_FILE
 $IPFG -c || true
 
 echo
-echo ">> Check the remote gateway list."
-$IPFG -R |tee $LOG_FILE || ret=1
-grep Online $LOG_FILE |awk '{ print $2 }' > $RES_FILE
+echo "==== Check the IPFS gateways ====" |tee $RES_FILE
+$IPFG -R |tee -a $LOG_FILE || ret=1
+
+grep Online $LOG_FILE |awk '{ print $2 }' >> $RES_FILE
 NUM_GW=$(cat $RES_FILE |wc -l)
 
 echo "IPFS gateway: <$NUM_GW> are available from inside of GFW." |tee -a $LOG_FILE

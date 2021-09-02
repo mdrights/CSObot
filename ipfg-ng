@@ -687,9 +687,9 @@ do
 
         RD_RESP_CODE=$(${CURL} -o /dev/null --silent --head --write-out "%{http_code}\n" $RD_TESTURL)
         if [[ $RD_RESP_CODE =~ ^(0|4|5)[0-9]+$ ]] ; then
-            echo -e "${RED}Offline${NC}\t$RD_DOMAIN\t[$RESP_CODE: $DOMAIN]"
+            echo -e "${RED}Offline${NC}\t$DOMAIN\t[$RESP_CODE: $RD_DOMAIN]"
         else
-            echo -e "${BLUE}Online${NC}\t$RD_DOMAIN\t[$RESP_CODE: $DOMAIN]"
+            echo -e "${BLUE}Online${NC}\t$DOMAIN\t[$RESP_CODE: $RD_DOMAIN]"
         fi
     elif [[ $RESP_CODE =~ ^(0|4|5)[0-9]+$ ]] ; then
         echo -e "${RED}Offline${NC}\t$DOMAIN\t[$RESP_CODE]"
