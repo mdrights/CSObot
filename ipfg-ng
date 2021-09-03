@@ -672,7 +672,7 @@ do
     #|  echo -e "${GREEN}Online${NC}\t$DOMAIN"
     #else
 
-    RESP_CODE=$(${CURL} -o /dev/null --silent --head --write-out "%{http_code}\n" $TESTURL)
+    RESP_CODE=$(${CURL} -o /dev/null -L --silent --head --write-out "%{http_code}\n" $TESTURL)
 
     if [[ $RESP_CODE =~ ^(301|302|303|307|308)$ ]] ; then
         DOMAIN=$(echo "$GATEWAY" | awk -F/ '{print $1"//"$3}')
@@ -685,8 +685,8 @@ do
         # Not using this method.
         # if [[ $(${CURL} --silent "$RD_TESTURL") == "Hello from IPFS Gateway Checker" ]] ; then
 
-        RD_RESP_CODE=$(${CURL} -o /dev/null --silent --head --write-out "%{http_code}\n" $RD_TESTURL)
-        if [[ $RD_RESP_CODE =~ ^(0|4|5)[0-9]+$ ]] ; then
+        RD_RESP_CODE=$(${CURL} -o /dev/null -L --silent --head --write-out "%{http_code}\n" $RD_TESTURL)
+        if [[ $RD_RESP_CODE =~ ^(0|3|4|5)[0-9]+$ ]] ; then
             echo -e "${RED}Offline${NC}\t$DOMAIN\t[$RD_RESP_CODE: $RD_DOMAIN]"
         else
             echo -e "${BLUE}Online${NC}\t$DOMAIN\t[$RD_RESP_CODE: $RD_DOMAIN]"
