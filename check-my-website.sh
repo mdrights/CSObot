@@ -4,7 +4,7 @@
 
 SELF_PATH=$(dirname $0)
 SITE="$1"
-PROXY="env https_proxy=http://192.168.1.173:8118"
+PROXY="env https_proxy=http://192.168.100.6:8118"
 LOG_FILE="/tmp/check-website.log"
 
 echo "
