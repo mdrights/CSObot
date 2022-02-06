@@ -25,7 +25,8 @@ print 'Socket Created.'
 
 host = ''
 port = 6667                 # 6697
-remote_ip = '109.74.200.93'
+#remote_ip = '109.74.200.93'
+remote_ip = '188.240.145.40'
 
 # Connect to OFTC.net 
 
